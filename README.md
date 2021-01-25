@@ -1,2 +1,2 @@
 # Pangle-SDK-Integration-Guideline
-This is a unofficial guideline for Pangle SDK Intehration
+This is an unofficial guideline for Pangle SDK Intehration
