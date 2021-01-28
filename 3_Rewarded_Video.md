@@ -1,5 +1,5 @@
 
-# Rewarded Video
+# 3. Rewarded Video
 ## Introduction
 Rewarded video is a full-screen video ad. Users can get rewards after watching the video. At present, the forms of Pangle rewarded video ads can:
 1. Display a Endcard after the video
