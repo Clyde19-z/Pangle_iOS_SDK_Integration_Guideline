@@ -1,4 +1,4 @@
-# Native Ads
+# 6. Native Ads
 
 ## Introduction
 Native ads are ad assets that are presented to users via UI components that are native to the platform. It can be formatted to match your app's visual design. When a native ad loads, your app receives an ad object that contains its assets, and the app (rather than the SDK) is then responsible for displaying them. This differs from other ad formats, which don't allow you to customize the appearance of the ad.
