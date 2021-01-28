@@ -1,5 +1,5 @@
 
-# Native Ads Configuration
+# 7. Native Ads Configuration
 
 ## Introduction
 1. The BUNativeAd class provides various information. After obtaining the data, the developer can obtain the native ad assets from `BUMaterialMeta.`
