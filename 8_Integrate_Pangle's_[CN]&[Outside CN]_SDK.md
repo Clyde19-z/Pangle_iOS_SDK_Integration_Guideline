@@ -1,5 +1,5 @@
 
-# How to integrate both [CN] Pangle SDK and [Outside CN] Pangle SDK in one project
+# 8. How to integrate both [CN] Pangle SDK and [Outside CN] Pangle SDK in one project
 
 Starting from version 3.4.0.0, pangle iOS SDK will be divided into `[CN] Pangle SDK` and `[Outside CN] Pangle SDK`.
 
