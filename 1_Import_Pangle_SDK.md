@@ -8,7 +8,8 @@
 ## Method One:
 Import {`BUAdSDK.framework`, `BUFoundation.framework`, `BUAdSDK.bundle`, `BUVAAuxiliary.framework`} to the project manually.
 
-<img src="destination.png" />
+<img src="https://github.com/JohnnyWangMiura/Pangle-iOS-SDK-Integration-Guideline/blob/main/destination.png" />
+
 
 
 **Note: When you upgrade the SDK, you need to update all frameworks and bundle files.**
@@ -16,7 +17,8 @@ Import {`BUAdSDK.framework`, `BUFoundation.framework`, `BUAdSDK.bundle`, `BUVAAu
 
 Please make sure that `Copy Bundle Resource` contains `BUAdSDK.bundle`.
 
-<img src="bundle.png" />
+<img src="https://github.com/JohnnyWangMiura/Pangle-iOS-SDK-Integration-Guideline/blob/main/bundle.png" />
+
 
 
 
@@ -29,7 +31,7 @@ Add the parameter `-objc` to `Other Linker Flags` in build settings, and the SDK
 
 #### Detailed Steps:
 
-<img src="permission.png" />
+<img src="https://github.com/JohnnyWangMiura/Pangle-iOS-SDK-Integration-Guideline/blob/main/permission.png" />
 
 
 
@@ -63,13 +65,13 @@ Project needs to find Link Binary With Libraries in `TARGETS` - > `Build Phases`
 
 Detailed Steps:
 
-<img src="library.png"/>
+<img src="https://github.com/JohnnyWangMiura/Pangle-iOS-SDK-Integration-Guideline/blob/main/library.png"/>
 
 
 
 ### Add language configuration
 
-<img src="language.png"/>
+<img src="https://github.com/JohnnyWangMiura/Pangle-iOS-SDK-Integration-Guideline/blob/main/language.png"/>
 
 
 
