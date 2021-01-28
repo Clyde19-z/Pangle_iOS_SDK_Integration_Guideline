@@ -1,5 +1,5 @@
 
-# Banner Ads
+# 5. Banner Ads
 
 ## Introduction
 Banner ads occupy a spot within an app's layout, either at the top or bottom of the device screen.
