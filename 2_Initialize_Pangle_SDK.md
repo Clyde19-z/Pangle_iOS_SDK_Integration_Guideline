@@ -1,4 +1,4 @@
-# Initialize Pangle SDK
+# 2. Initialize Pangle SDK
 
 ## Interface
 Currently, the interface provides the following class methods.
