@@ -1,6 +1,6 @@
 # 1. Import Pangle SDK
 
-## Operating environment requirement
+## Environment requirement
 - Support  IOS 9. X and above;
 - SDK compilation environment Xcode 11;
 - Supporting architecture: x86-64, armv7, arm64,i386
