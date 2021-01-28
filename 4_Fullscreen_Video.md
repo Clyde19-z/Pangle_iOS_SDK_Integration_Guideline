@@ -1,5 +1,5 @@
 
-# 4. FullscreenVideo
+# 4. Fullscreen Video
 
 ## Introduction
 
