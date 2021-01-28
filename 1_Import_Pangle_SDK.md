@@ -1,5 +1,10 @@
 # 1. Import Pangle SDK
 
+## Operating environment requirement
+- Support  IOS 9. X and above;
+- SDK compilation environment Xcode 11;
+- Supporting architecture: x86-64, armv7, arm64,i386
+
 ## Method One:
 Import {`BUAdSDK.framework`, `BUFoundation.framework`, `BUAdSDK.bundle`, `BUVAAuxiliary.framework`} to the project manually.
 
@@ -14,11 +19,6 @@ Please make sure that `Copy Bundle Resource` contains `BUAdSDK.bundle`.
 <img src="bundle.png" />
 
 
-## Method Two:
-```XML
-pod 'Ads-Global', '~>3.4.1.1' 
-```
-
 
 
 ## Xcode Compiler Option Settings
@@ -32,10 +32,7 @@ Add the parameter `-objc` to `Other Linker Flags` in build settings, and the SDK
 <img src="permission.png" />
 
 
-#### Operating environment configuration
-- Support  IOS 9. X and above;
-- SDK compilation environment Xcode 11;
-- Supporting architecture: x86-64, armv7, arm64,i386
+
 
 ### Add Dependency Libraries
 
@@ -74,4 +71,10 @@ Detailed Steps:
 
 <img src="language.png"/>
 
+
+
+## Method Two:
+```XML
+pod 'Ads-Global', '~>3.4.1.1' 
+```
 
