@@ -10,5 +10,5 @@
 6. [Native Ad](6_Native_Ads.md)
 7. [Native Ads Configuration](7_Native_Ads_Configuration.md)
 8. [How to integrate both [CN] Pangle SDK and [Outside CN] Pangle SDK in one project](8_Integrate_2_Pangle's_SDK.md)
-9. [Pangle Publishers checklist for iOS 14](9_Pangle_Publishers_Checklist_for_iOS14.md)
+9. [Pangle Publishers Checklist for iOS 14](9_Pangle_Publishers_Checklist_for_iOS14.md)
 10. [Error Code](10_Error_Code.md)
