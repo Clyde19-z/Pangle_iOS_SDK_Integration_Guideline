@@ -3,6 +3,17 @@
 ## Interface
 Currently, the interface provides the following class methods.
 
+
+
+
+​
+## Pass Appid to initialize Pangle SDK
+You must initialize Pangle SDK before loading Pangle ads. This needs to be done only once, ideally at App launch stage(in AppDelegate method).
+
+```objective-c
+//pass appid to initialize pangle sdk
+[BUAdSDKManager setAppID:@"xxxxxx"];
+```
 ```objective-c
 @property (nonatomic, copy, readonly, class) NSString *SDKVersion;
 ​
@@ -30,6 +41,7 @@ Currently, the interface provides the following class methods.
 ​​
 /// Notice that Developers must open GDPR Privacy for the user before setAppID.
 + (void)openGDPRPrivacyFromRootViewController:(UIViewController *)rootViewController confirm:(BUConfirmGDPR)confirm;
+
 ​
 /// get appID
 + (NSString *)appID;
@@ -37,16 +49,6 @@ Currently, the interface provides the following class methods.
 /// get GDPR
 + (NSInteger)GDPR;
 ```
-
-​
-## Pass Appid to initialize Pangle SDK
-You must initialize Pangle SDK before loading Pangle ads. This needs to be done only once, ideally at App launch stage(in AppDelegate method).
-
-```objective-c
-//pass appid to initialize pangle sdk
-[BUAdSDKManager setAppID:@"xxxxxx"];
-```
-
 
 **Warning: Ads may be preloaded by the Pangle Ads SDK or mediation partner SDKs after initial. If you need to obtain consent from users in the European Economic Area (EEA) or users under age, please ensure you do so before initializing the Pangle Ads SDK.**
 
