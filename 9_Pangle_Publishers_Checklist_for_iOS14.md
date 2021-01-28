@@ -1,7 +1,7 @@
 # 9. Pangle Publishers Checklist for iOS 14
 
 1. Update apps to run on `Xcode 12.0 and higher version` to ensure compatibility with iOS 14.
-2. Update to `Pangle iOS SDK 3.2.5.0` and higher version for iOS 14 and SKAdNetwork Support
+2. Update to `Pangle iOS SDK 3.3.6.2` or `Pangle iOS SDK 3.4.1.1` and higher version for iOS 14 and SKAdNetwork Support
 3. Add Pangle SKAdNetwork ID to your app's Info.plist to enable conversion tracking
 
 ```javascript
