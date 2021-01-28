@@ -1,4 +1,4 @@
-# Import Pangle SDK
+# 1. Import Pangle SDK
 
 ## Method One:
 Import {`BUAdSDK.framework`, `BUFoundation.framework`, `BUAdSDK.bundle`, `BUVAAuxiliary.framework`} to the project manually.
