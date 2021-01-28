@@ -1,4 +1,4 @@
-# Pangle Publishers checklist for iOS 14
+# 9. Pangle Publishers Checklist for iOS 14
 
 1. Update apps to run on `Xcode 12.0 and higher version` to ensure compatibility with iOS 14.
 2. Update to `Pangle iOS SDK 3.2.5.0` and higher version for iOS 14 and SKAdNetwork Support
