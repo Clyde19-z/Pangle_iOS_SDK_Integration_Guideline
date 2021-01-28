@@ -22,55 +22,8 @@ Rewarded video is a full-screen video ad. Users can get rewards after watching t
 - `Reward item`: Enter the name of reward item the user will receive. Examples: Coins, extra lives
 - `Reward deliver setting`：Validate each completed rewarded video ad view and ensure you're only rewarding users who have actually finished watching the video in your app.
 
-### Server callback
-The server-side verification callback will append query parameters to your postback url describing the rewarded video interaction:
 
-`user_id=%s&trans_id=%s&reward_name=%s&reward_amount=%d&extra=%s&sign=%s`
-
-| Field Name    | Field Definition               | Field Type | Remarks                                                                 |
-|---------------|--------------------------------|------------|-------------------------------------------------------------------------|
-| sign          | signSignature of   the request | string     | Signature of the   request guarantees security                          |
-| user_id       | User id                        | string     | App's unique   user identifier, it depends on what you entered via SDK. |
-| trans_id      | Transaction id                 | string     | Unique   transaction ID for completing viewing the ad                   |
-| reward_amount | number of   rewards            | int        | Pangle platform   configuration                                         |
-| reward_name   | Name of rewards                | string     | Pangle platform   configuration                                         |
-| extra         | Extra                          | string     | Call SDK input   and pass-through，leave it   empty if not needed.      |
-
-### Signature Generation：
-- `appSecurityKey`: The key you get for adding rewarded video ad code bit on the Pangle Network
-- `transId`: transaction id
-- `sign`: sha256(appSecurityKey:transId)
-
-Python sample:
-```python
-import hashlib
-if __name__ == "__main__":
-    trans_id = "6FEB23ACB0374985A2A52D282EDD5361u6643"
-    app_security_key = "7ca31ab0a59d69a42dd8abc7cf2d8fbd"
-    check_sign_raw = "%s:%s" % (app_security_key, trans_id)
-    sign = hashlib.sha256(check_sign_raw).hexdigest()
-
-```
-
-### Return：
-Returns json data with the following fields:
-
-| Field Definition | Field Name        | Field Type | Remarks                                        |
-|------------------|-------------------|------------|------------------------------------------------|
-| isValid          | Validation result | BOOL       | determines the result, whether to award or not |
-
-Instance:
-```json
-{
-   "isValid": true
-}
-```
-
-**Note：**
-
-The Server-side verification is not necessary. Server-side verification acts as an additional layer of validation for rewarded ad views in your app. It’s performed in addition to the standard client-side callback. You can use server-side verification to validate each completed rewarded video ad view and ensure you're only rewarding users who have actually finished watching the video in your app.
-
-## RewardedVideo Implementation
+## Rewarded Video Implementation
 
 ### Create RewardedVideo Object and Request Ads
 
@@ -165,8 +118,59 @@ A best practice is to load another rewarded ad in the `rewardedVideoAdDidClose` 
 //The original BURewardedVideoAd object can be set to nil in this callback
 }
 ```
+## Server callback
 
-### Note
+**Note：**
+The Server-side verification is not necessary. Server-side verification acts as an additional layer of validation for rewarded ad views in your app. It’s performed in addition to the standard client-side callback. You can use server-side verification to validate each completed rewarded video ad view and ensure you're only rewarding users who have actually finished watching the video in your app.
+
+
+The server-side verification callback will append query parameters to your postback url describing the rewarded video interaction:
+`user_id=%s&trans_id=%s&reward_name=%s&reward_amount=%d&extra=%s&sign=%s`
+
+
+
+| Field Name    | Field Definition               | Field Type | Remarks                                                                 |
+|---------------|--------------------------------|------------|-------------------------------------------------------------------------|
+| sign          | signSignature of   the request | string     | Signature of the   request guarantees security                          |
+| user_id       | User id                        | string     | App's unique   user identifier, it depends on what you entered via SDK. |
+| trans_id      | Transaction id                 | string     | Unique   transaction ID for completing viewing the ad                   |
+| reward_amount | number of   rewards            | int        | Pangle platform   configuration                                         |
+| reward_name   | Name of rewards                | string     | Pangle platform   configuration                                         |
+| extra         | Extra                          | string     | Call SDK input   and pass-through，leave it   empty if not needed.      |
+
+### Signature Generation：
+- `appSecurityKey`: The key you get for adding rewarded video ad code bit on the Pangle Network
+- `transId`: transaction id
+- `sign`: sha256(appSecurityKey:transId)
+
+Python sample:
+```python
+import hashlib
+if __name__ == "__main__":
+    trans_id = "6FEB23ACB0374985A2A52D282EDD5361u6643"
+    app_security_key = "7ca31ab0a59d69a42dd8abc7cf2d8fbd"
+    check_sign_raw = "%s:%s" % (app_security_key, trans_id)
+    sign = hashlib.sha256(check_sign_raw).hexdigest()
+
+```
+
+### Return：
+Returns json data with the following fields:
+
+| Field Definition | Field Name        | Field Type | Remarks                                        |
+|------------------|-------------------|------------|------------------------------------------------|
+| isValid          | Validation result | BOOL       | determines the result, whether to award or not |
+
+Instance:
+```json
+{
+   "isValid": true
+}
+```
+
+
+
+## Note
 1. All the rootViewController parameters in Ad APIs must be provided to process ad redirects.In the SDK, all redirects use the present method. Therefore, make sure that the passed rootViewController parameters are not null and do not have other present controllers. Otherwise the present will fail because presentedViewController already exists.
 2. Select the server callback, please ensure that the type of userid is NSString and not empty. The callback URL instance
 ```json
@@ -179,5 +183,5 @@ A best practice is to load another rewarded ad in the `rewardedVideoAdDidClose` 
 4. The extra should be the string serialized by JSON to ensure that it is not null.
 5. The `isAdValid` method has been deprecated since V3.3.0.0. Please do not use this field to verify whether the reward video ad is valid.
 
-### Resource
+## Resource
 Demo: [GitHub](https://github.com/bytedance/Bytedance-UnionAD/blob/master/Example/BUDemo/BUDemo/App/Example/controller/BUDRewardedVideoAdViewController.m)
