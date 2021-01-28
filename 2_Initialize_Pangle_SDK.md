@@ -1,19 +1,19 @@
 # 2. Initialize Pangle SDK
 
-## Interface
-Currently, the interface provides the following class methods.
-
-
-
 
 ​
 ## Pass Appid to initialize Pangle SDK
 You must initialize Pangle SDK before loading Pangle ads. This needs to be done only once, ideally at App launch stage(in AppDelegate method).
 
+**Warning: Ads may be preloaded by the Pangle Ads SDK or mediation partner SDKs after initial. If you need to obtain consent from users in the European Economic Area (EEA) or users under age, please ensure you do so before initializing the Pangle Ads SDK.**
+
 ```objective-c
 //pass appid to initialize pangle sdk
 [BUAdSDKManager setAppID:@"xxxxxx"];
 ```
+### Interface
+Currently, the interface provides the following class methods.
+
 ```objective-c
 @property (nonatomic, copy, readonly, class) NSString *SDKVersion;
 ​
@@ -49,8 +49,6 @@ You must initialize Pangle SDK before loading Pangle ads. This needs to be done 
 /// get GDPR
 + (NSInteger)GDPR;
 ```
-
-**Warning: Ads may be preloaded by the Pangle Ads SDK or mediation partner SDKs after initial. If you need to obtain consent from users in the European Economic Area (EEA) or users under age, please ensure you do so before initializing the Pangle Ads SDK.**
 
 See SDK Demo Project or [GitHub](https://github.com/bytedance/Bytedance-UnionAD/blob/master/Example/BUDemo/AppDelegate.m) for more details.
 
