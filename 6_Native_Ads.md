@@ -4,14 +4,14 @@
 Native ads are ad assets that are presented to users via UI components that are native to the platform. It can be formatted to match your app's visual design. When a native ad loads, your app receives an ad object that contains its assets, and the app (rather than the SDK) is then responsible for displaying them. This differs from other ad formats, which don't allow you to customize the appearance of the ad.
 
 ## Precondition
-1. Create an app and native ad placement on Pangle platform
+Create an app and native ad placement on Pangle platform
  - Create an application: [Application] -> [App] -> [Add App]
     - Reference：[How do I create a new App?](https://www.pangleglobal.com/jp/help/doc/5dd362e23d7897001168e334)
 
   - Create an ad placement：[Application] -> [Ad Placements] -> [Add Ad Placement] -> [Native Ads]
     - Reference：[How do I create an ad placement?](https://www.pangleglobal.com/jp/help/doc/5e62079cfe8738000fd184cf)
 
-## Native Ads
+## Native Ads Implementation
 
 ### Create Native Object and Request Ads
 
@@ -30,7 +30,7 @@ Create `BUAdSlot` to build the configuration of the ad, then call `loadAdDataWit
 ```objective-c
 BUNativeAdsManager *nad = [BUNativeAdsManager new];
 BUAdSlot *slot1 = [[BUAdSlot alloc] init];
-slot1.ID = self.viewModel.slotID;
+slot1.ID = @"Your_Ad_Placement_Id";
 slot1.AdType = BUAdSlotAdTypeFeed;
 nad.adslot = slot1;
 nad.delegate = self;
