@@ -9,10 +9,12 @@ Fullscreen Video ads, also known as the Interstitial Video Ads, are full-screen 
 Create an app and fullscreen video ad placement on Pangle platform
 
    - Create an application: [Application] -> [App] -> [Add App]
-    - Reference：[How do I create a new App?](https://www.pangleglobal.com/jp/help/doc/5dd362e23d7897001168e334)
+    
+      - Reference：[How do I create a new App?](https://www.pangleglobal.com/jp/help/doc/5dd362e23d7897001168e334)
 
   - Create an ad placement：[Application] -> [Ad Placements] -> [Add Ad Placement] -> [Interstitial Video Ads]
-    - Reference：[How do I create an ad placement?](https://www.pangleglobal.com/jp/help/doc/5e62079cfe8738000fd184cf)
+    
+      - Reference：[How do I create an ad placement?](https://www.pangleglobal.com/jp/help/doc/5e62079cfe8738000fd184cf)
     
 **Note: 'Fullscreen Video Ads' mentioned here is named as 'Interstitial Video Ads' on Pangle's platform. **
 
