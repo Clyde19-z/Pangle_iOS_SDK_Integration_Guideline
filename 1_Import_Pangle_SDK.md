@@ -5,7 +5,21 @@
 - SDK compilation environment Xcode 11;
 - Supporting architecture: x86-64, armv7, arm64,i386
 
-## Method One:
+
+## Import Pangle SDK through CocoaPod:
+Import Pangle SDK that the version is higher v3.4.0.0
+```XML
+pod 'Ads-Global', '~>3.4.1.1' 
+```
+
+Note: import old version of Pangle SDK that the version is lower v3.4.0.0
+```XML
+pod 'Bytedance-UnionAD', '~>3.3.6.2'
+```
+
+
+
+## Import Pangle SDK Manually:
 Import {`BUAdSDK.framework`, `BUFoundation.framework`, `BUAdSDK.bundle`, `BUVAAuxiliary.framework`} to the project manually.
 
 <img src="https://github.com/JohnnyWangMiura/Pangle-iOS-SDK-Integration-Guideline/blob/main/destination.png" />
@@ -23,20 +37,20 @@ Please make sure that `Copy Bundle Resource` contains `BUAdSDK.bundle`.
 
 
 
-## Xcode Compiler Option Settings
+### Xcode Compiler Option Settings
 
-### Add Permissions
+#### Add Permissions
 
 Add the parameter `-objc` to `Other Linker Flags` in build settings, and the SDK supports `- all_ load`
 
-#### Detailed Steps:
+##### Detailed Steps:
 
 <img src="https://github.com/JohnnyWangMiura/Pangle-iOS-SDK-Integration-Guideline/blob/main/permission.png" />
 
 
 
 
-### Add Dependency Libraries
+#### Add Dependency Libraries
 
 Project needs to find Link Binary With Libraries in `TARGETS` - > `Build Phases`, click "+", and then add the following dependent libraries in order.
 
@@ -68,22 +82,12 @@ Detailed Steps:
 <img src="https://github.com/JohnnyWangMiura/Pangle-iOS-SDK-Integration-Guideline/blob/main/library.png"/>
 
 
-
-### Add language configuration
+#### Add language configuration
 
 <img src="https://github.com/JohnnyWangMiura/Pangle-iOS-SDK-Integration-Guideline/blob/main/language.png"/>
 
 
 
-## Method Two:
-Import Pangle SDK that the version is higher v3.4.0.0
-```XML
-pod 'Ads-Global', '~>3.4.1.1' 
-```
 
-Note: import old version of Pangle SDK that the version is lower v3.4.0.0
-```XML
-pod 'Bytedance-UnionAD', '~>3.3.6.2'
-```
 
 
