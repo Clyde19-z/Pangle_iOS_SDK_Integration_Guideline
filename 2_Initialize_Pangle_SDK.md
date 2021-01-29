@@ -6,7 +6,7 @@ You must initialize Pangle SDK before loading Pangle ads. This needs to be done 
 
 ```objective-c
 //pass appid to initialize pangle sdk
-[BUAdSDKManager setAppID:@"xxxxxx"];
+[BUAdSDKManager setAppID:@"Your_Pangle_App_Id"];
 ```
 **Warning: Ads may be preloaded by the Pangle Ads SDK or mediation partner SDKs after initial. If you need to obtain consent from users in the European Economic Area (EEA) or users under age, please ensure you do so before initializing the Pangle Ads SDK.**
 
