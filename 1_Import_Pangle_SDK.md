@@ -12,7 +12,8 @@ Import Pangle SDK that the version is higher v3.4.0.0
 pod 'Ads-Global', '~>3.4.1.1' 
 ```
 
-Note: import old version of Pangle SDK that the version is lower v3.4.0.0
+
+- Note: If you wanna import old version of Pangle SDK that the version is lower v3.4.0.0, as shown below:
 ```XML
 pod 'Bytedance-UnionAD', '~>3.3.6.2'
 ```
