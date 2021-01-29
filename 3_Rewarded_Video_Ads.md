@@ -7,7 +7,7 @@ Rewarded video is a full-screen video ad. Users can get rewards after watching t
 3. Display a playable ad directly.
 
 ## Precondition
-1. Create an app and reward video ad placement on Pangle platform
+Create an app and reward video ad placement on Pangle platform
 
   - Create an application: [Application] -> [App] -> [Add App]
     - Reference：[How do I create a new App?](https://www.pangleglobal.com/jp/help/doc/5dd362e23d7897001168e334)
@@ -20,7 +20,7 @@ Rewarded video is a full-screen video ad. Users can get rewards after watching t
 - `Orienation`: Select the orientation of the video.
 - `Reward amount`: Enter the number of reward items the user will receive. Must be a whole number.
 - `Reward item`: Enter the name of reward item the user will receive. Examples: Coins, extra lives
-- `Reward deliver setting`：Validate each completed rewarded video ad view and ensure you're only rewarding users who have actually finished watching the video in your app.
+- `Reward deliver setting`：Validate each completed rewarded video ad view by the third-party server and ensure you're only rewarding users who have actually finished watching the video in your app.
 
 
 ## Rewarded Video Implementation
