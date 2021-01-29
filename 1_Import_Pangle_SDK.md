@@ -78,7 +78,7 @@ Project needs to find Link Binary With Libraries in `TARGETS` - > `Build Phases`
 
 **Note: Add the `ImageIO.framework` if the above dependency library is still reporting errors.**
 
-Detailed Steps:
+##### Detailed Steps:
 
 <img src="https://github.com/JohnnyWangMiura/Pangle-iOS-SDK-Integration-Guideline/blob/main/library.png"/>
 
