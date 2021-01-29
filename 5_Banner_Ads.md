@@ -5,7 +5,7 @@
 Banner ads occupy a spot within an app's layout, either at the top or bottom of the device screen.
 
 ## Precondition
-1. Create an app and banner ad placement on Pangle platform
+Create an app and banner ad placement on Pangle platform
  - Create an application: [Application] -> [App] -> [Add App]
     - Reference：[How do I create a new App?](https://www.pangleglobal.com/jp/help/doc/5dd362e23d7897001168e334)
 
@@ -23,13 +23,13 @@ Requied：
 
 | Field Definition | Field Name | Field Type | Remarks                                                            |
 |------------------|------------|------------|--------------------------------------------------------------------|
-| slotID           | slot  ID   | NSString   | ad space ID                                                        |
+| slotID           | slot  ID   | NSString   | ad placement ID                                                        |
 | adSize           | ad size    | CGSize     | Ad size must be the same size as the pangle platform configuration |
 
 Create a `BUNativeExpressBannerView` object, and call `loadAdData` on `BUNativeExpressBannerView` to load a banner ad.
 
 ```objective-c
-self.bannerView = [[BUNativeExpressBannerView alloc] initWithSlotID:slotID rootViewController:self adSize:CGSizeMake(screenWidth, bannerHeigh) IsSupportDeepLink:YES];
+self.bannerView = [[BUNativeExpressBannerView alloc] initWithSlotID:@"Your_Ad_Placement_Id" rootViewController:self adSize:CGSizeMake(screenWidth, bannerHeigh) IsSupportDeepLink:YES];
 self.bannerView.frame = CGRectMake(0, self.view.height-bannerHeigh, screenWidth, bannerHeigh);
 self.bannerView.delegate = self;
 [self.bannerView loadAdData];
