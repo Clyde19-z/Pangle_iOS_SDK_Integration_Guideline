@@ -1,7 +1,6 @@
 # 2. Initialize Pangle SDK
 
 
-​
 ## Pass Appid to initialize Pangle SDK
 You must initialize Pangle SDK before loading Pangle ads. This needs to be done only once, ideally at App launch stage(in AppDelegate method).
 
@@ -10,8 +9,9 @@ You must initialize Pangle SDK before loading Pangle ads. This needs to be done 
 [BUAdSDKManager setAppID:@"xxxxxx"];
 ```
 **Warning: Ads may be preloaded by the Pangle Ads SDK or mediation partner SDKs after initial. If you need to obtain consent from users in the European Economic Area (EEA) or users under age, please ensure you do so before initializing the Pangle Ads SDK.**
-### Interface
-Currently, the interface provides the following class methods.
+
+### Interface Instruction
+Currently, the `BUAdSDKManager` interface provides the following class methods.
 
 ```objective-c
 @property (nonatomic, copy, readonly, class) NSString *SDKVersion;
@@ -51,10 +51,6 @@ Currently, the interface provides the following class methods.
 
 See SDK Demo Project or [GitHub](https://github.com/bytedance/Bytedance-UnionAD/blob/master/Example/BUDemo/AppDelegate.m) for more details.
 
-## Redirect Readme
-
-**All the rootViewController parameters in Ad APIs must be provided to process ad redirects. In the SDK, all redirects use the present method. Therefore, make sure that the passed rootViewController parameters are not null and do not have other present controllers. Otherwise the present will fail because presentedViewController already exists.**
-
 ## GDPR
 Pangle provides a tool for publishers to request consent for personalized ads as well as to handle certain requirements. Publishers can use the following method to handle these requests by showing a single a form, as all of the configuration happens in the Funding Choices UI.
 
@@ -66,3 +62,8 @@ Publishers could also make a tool themselves to request consent.
 
 ## COPPA
 Pangle also compliances with Children’s Online Privacy Protection Act (COPPA), Pangle SDK provides setCoppa method for publishers. At the moment, Pangle won't return ads for Children (Under the age of 13).
+
+
+## Redirect Readme
+
+**All the rootViewController parameters in Ad APIs must be provided to process ad redirects. In the SDK, all redirects use the present method. Therefore, make sure that the passed rootViewController parameters are not null and do not have other present controllers. Otherwise the present will fail because presentedViewController already exists.**
