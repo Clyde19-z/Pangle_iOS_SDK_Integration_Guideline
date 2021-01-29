@@ -4,7 +4,7 @@
 Rewarded video is a full-screen video ad. Users can get rewards after watching the video. At present, the forms of Pangle rewarded video ads can:
 1. Display a Endcard after the video
 2. Display a playable ad after the video
-3. Directly display a playable ad.
+3. Display a playable ad directly.
 
 ## Precondition
 1. Create an app and reward video ad placement on Pangle platform
@@ -34,7 +34,7 @@ Requied：
 
 | Field Definition | Field Name | Field Type | Remarks     |
 |------------------|------------|------------|-------------|
-| SlotID           | slot  ID   | NSString   | ad space ID |
+| SlotID           | slot  ID   | NSString   | ad placement ID |
 
 Optional：
 
@@ -53,7 +53,7 @@ Instance:
 //It is required to generate a new BURewardedVideoAd object each time calling the loadAdData method to request the latest rewarded video ad. Please do not reuse the local cache rewarded video ad.
 BURewardedVideoModel *model = [[BURewardedVideoModel alloc] init];
 model.userId = @"123";
-self.rewardedVideoAd = [[BURewardedVideoAd alloc] initWithSlotID:slotID rewardedVideoModel:model];
+self.rewardedVideoAd = [[BURewardedVideoAd alloc] initWithSlotID:@"Your_Ad_Placement_Id" rewardedVideoModel:model];
 self.rewardedVideoAd.delegate = self;
 [self.rewardedVideoAd loadAdData];
 ```
@@ -118,6 +118,7 @@ A best practice is to load another rewarded ad in the `rewardedVideoAdDidClose` 
 //The original BURewardedVideoAd object can be set to nil in this callback
 }
 ```
+
 ## Server callback
 
 **Note：**
@@ -167,7 +168,6 @@ Instance:
    "isValid": true
 }
 ```
-
 
 
 ## Note
