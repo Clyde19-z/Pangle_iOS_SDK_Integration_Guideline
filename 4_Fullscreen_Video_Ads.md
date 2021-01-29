@@ -6,7 +6,8 @@
 Fullscreen Video ads, also known as the Interstitial Video Ads, are full-screen video ads with 15-30 seconds long that cover the interface of an app until closed by the user. It can be skipped after 5 seconds. They're typically displayed at natural transition points in the flow of an app, such as between activities or during the pause between levels in a game. When an app shows an interstitial ad, the user has the choice to either tap on the ad and continue to its destination or close it and return to the app.
 
 ## Precondition
-1. Create an app and fullscreen video ad placement on Pangle platform
+Create an app and fullscreen video ad placement on Pangle platform
+
    - Create an application: [Application] -> [App] -> [Add App]
     - Reference：[How do I create a new App?](https://www.pangleglobal.com/jp/help/doc/5dd362e23d7897001168e334)
 
@@ -21,7 +22,7 @@ Fullscreen Video ads, also known as the Interstitial Video Ads, are full-screen 
 
 ## FullscreenVideo Implementation
 
-### Create FullscreenVideo Object and Request Ads
+### Create FullscreenVideoAd Object and Request Ads
 
 #### BUFullscreenVideoAd
 FullscreenVideo ads are requested and shown by `BUFullscreenVideoAd` objects. The first step in using one is to instantiate it and set its ad placement Id.
@@ -30,7 +31,7 @@ Requied：
 
 | Field Definition | Field Name | Field Type | Remarks     |
 |------------------|------------|------------|-------------|
-| SlotID           | slot  ID   | NSString   | ad space ID |
+| SlotID           | slot  ID   | NSString   | ad placement ID |
 
 To load a fullscreen video ad, call `loadAdData` on the `BUFullscreenVideoAd` object.
 
@@ -38,7 +39,7 @@ Instance:
 
 ```objective-c
 //It is required to generate a new BUFullscreenVideoAd object each time calling the loadAdData method to request the latest full-screen video ad. Please do not reuse the local cache full-scren video ad.
-self.fullscreenVideoAd = [[BUFullscreenVideoAd alloc] initWithSlotID:slotID];
+self.fullscreenVideoAd = [[BUFullscreenVideoAd alloc] initWithSlotID:@"Your_Ad_Placement_Id"];
 self.fullscreenVideoAd.delegate = self;
 [self.fullscreenVideoAd loadAdData];
 ```
