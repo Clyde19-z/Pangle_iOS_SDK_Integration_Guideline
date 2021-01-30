@@ -47,7 +47,7 @@ self.fullscreenVideoAd.delegate = self;
 ```
 
 ### BUFullscreenVideoAdDelegate Callback
-|BUFullscreenVideoAdDelegate Callback      |       Description        |
+|   BUFullscreenVideoAdDelegate Callback      |       Description        |
 |---------------------------------------------------|--------------------------------------------------------------------------|
 | fullscreenVideoMaterialMetaAdDidLoad:             | This method is called when video ad material loaded successfully.        |
 | fullscreenVideoAd: didFailWithError:              | This method is called when video ad material failed to load.             |
