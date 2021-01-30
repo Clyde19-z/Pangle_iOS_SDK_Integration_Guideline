@@ -61,9 +61,9 @@ self.rewardedVideoAd.delegate = self;
 
 
 ###  BURewardedVideoAdDelegate Callback
-
-| rewardedVideoAdDidLoad:                           | This method is called when video ad material loaded successfully.                                                                                                                                    |
+| BURewardedVideoAdDelegate Callback                         | Description                                                                                                                                   |
 |---------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| rewardedVideoAdDidLoad:                           | This method is called when video ad material loaded successfully.                                                                                                                                    |
 | rewardedVideoAd: didFailWithError:                | This method is called when video ad material failed to load.                                                                                                                                         |
 | rewardedVideoAdVideoDidLoad:                      | This method is called when cached successfully.It is suggested that the display of advertisement in this callback method can ensure the smooth display of advertisement and better user experience.  |
 | rewardedVideoAdWillVisible:                       | This method is called when a video ad slot will be showing.                                                                                                                                          |
