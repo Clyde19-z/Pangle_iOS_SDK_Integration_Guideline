@@ -62,9 +62,9 @@ You can add logo, ad label, video views, dislike buttons and so on in related vi
 BUVideoAdView provides methods such as play, pause, currentPlayTime, etc. Developers can apply it in Native ads to play or pause the ad, receive already played time through a click to resume the video, etc.
 
 ### BUVideoAdView Interface
-
-| - (CGFloat)currentPlayTime;                                                      | Get the already played time.                                                                             |
-|----------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------|
+|  BUVideoAdView Interface                                                    | Description     |
+|----------------------------------------------------------------------------------|-----------------------|
+| - (CGFloat)currentPlayTime;                                                      | Get the already played time.     |
 | - (void)play;                                                                    | Set video play when you support CustomMode                                                               |
 | - (void)pause;                                                                   | Set video pause when you support CustomMode                                                              |
 | @property (nonatomic, weak, readwrite) UIViewController *rootViewController;     | required. Root view controller for handling ad actions.                                                  |
@@ -75,9 +75,9 @@ BUVideoAdView provides methods such as play, pause, currentPlayTime, etc. Develo
 | playerPlayIncon: playInconSize:                                                  | Support configuration for pause button.                                                                  |
 
 ### BUVideoAdViewDelegate  Callback
-
-| videoAdView:didLoadFailWithError:                       | This method is called when videoadview failed to play.                                                                                                     |
-|---------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| BUVideoAdViewDelegate                     | Description      |
+|---------------------------------------------------------|---------------------------------------------------------------------|
+| videoAdView:didLoadFailWithError:                       | This method is called when videoadview failed to play.      |
 | videoAdView: stateDidChanged:                           | This method is called when videoadview playback status changed.                                                                                            |
 | playerDidPlayFinish:                                    | This method is called when videoadview end of play.                                                                                                        |
 | videoAdViewDidClick:                                    | This method is called when videoadview is clicked.                                                                                                         |
@@ -97,9 +97,9 @@ self.videoAdView.rootViewController = self;
 BUDislike class allow native ads to customize uninterested styles for rendering.
 
 ### BUDislike interface
-
-| @property (nonatomic, copy, readonly) NSArray<BUDislikeWords *> *filterWords;  | The array of BUDislikeWords which have reasons for dislike.   The application can show the secondary page for dislike if '[filterWords.options count] > 0'.                                                                                                                                                                                                    |
-|--------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|BUDislike interface|Description|
+|--------------------------------------------------------------------------------|-----------------------------|
+| @property (nonatomic, copy, readonly) NSArray<BUDislikeWords *> *filterWords;  | The array of BUDislikeWords which have reasons for dislike.   The application can show the secondary page for dislike if '[filterWords.options count] > 0'.                |
 | initWithNativeAd:                                                              | Initialize with nativeAd to get filterWords.  return BUDislike                                                                                                                                                                                                                                                                                                 |
 | didSelectedFilterWordWithReason:                                               |  Call this method after the user chose dislike reasons.   (Only for object which uses 'BUDislike.filterWords')   filterWord : reasons for dislike   don't need to call this method if '[filterWords.options count] > 0'.   Please don't change 'BUDislike.filterWords'.   'filterWord' must be one of 'BUDislike.filterWords', otherwise it will be filtered.  |
 
