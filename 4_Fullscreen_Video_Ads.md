@@ -47,9 +47,9 @@ self.fullscreenVideoAd.delegate = self;
 ```
 
 ### BUFullscreenVideoAdDelegate Callback
-
-| fullscreenVideoMaterialMetaAdDidLoad:             | This method is called when video ad material loaded successfully.        |
+|BUFullscreenVideoAdDelegate Callback      |       Description        |
 |---------------------------------------------------|--------------------------------------------------------------------------|
+| fullscreenVideoMaterialMetaAdDidLoad:             | This method is called when video ad material loaded successfully.        |
 | fullscreenVideoAd: didFailWithError:              | This method is called when video ad material failed to load.             |
 | fullscreenVideoAdVideoDataDidLoad:                | This method is called when video cached successfully.                    |
 | fullscreenVideoAdWillVisible:                     | This method is called when video ad slot will be showing.                |
@@ -97,6 +97,14 @@ A best practice is to load another fullscreen video in the `fullscreenVideoAdDid
  //The original BURewardedVideoAd object can be set to nil in this callback
 }
 ```
+
+
+## Test with test ads
+
+Now you have finished the integration. If you wanna test your apps, make sure you use test ads rather than live, production ads. The easiest way to load test ads is to use test mode. It's been specially configured to return test ads for every request, and you're free to use it in your own apps while coding, testing, and debugging. 
+
+Refer to the [How to add a test device?](https://www.pangleglobal.com/help/doc/5fba365f7b550100157bfc06) to add your device to the test devices on Pangle platform.
+
 
 ### Note
 1. All the rootViewController parameters in Ad APIs must be provided to process ad redirects. In the SDK, all redirects use the present method. Therefore, make sure that the passed rootViewController parameters are not null and do not have other present controllers. Otherwise the present will fail because presentedViewController already exists.
