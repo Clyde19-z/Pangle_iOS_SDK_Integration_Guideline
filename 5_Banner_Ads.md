@@ -43,15 +43,16 @@ Optional：
 
 ### BUNativeExpressBannerViewDelegate Callback
 
-| nativeExpressBannerAdViewDidLoad:                                   | This method is called when bannerAdView ad slot loaded successfully.                                                                                                                                                                                          |
-|---------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| nativeExpressBannerAdView: didLoadFailWithError:                    | This method is called when bannerAdView ad slot failed to load.                                                                                                                                                                                               |
-| nativeExpressBannerAdViewRenderSuccess:                             | This method is called when rendering a nativeExpressAdView successed.                                                                                                                                                                                         |
+|      BUNativeExpressBannerViewDelegate Callback      |      Description         |
+|----------------------------------------------------------------------|--------------------------------------------------------|
+| nativeExpressBannerAdViewDidLoad:                                   | This method is called when bannerAdView ad slot loaded successfully.          |
+| nativeExpressBannerAdView: didLoadFailWithError:                    | This method is called when bannerAdView ad slot failed to load.               |             
+| nativeExpressBannerAdViewRenderSuccess:                             | This method is called when rendering a nativeExpressAdView successed.          |
 | nativeExpressBannerAdViewRenderFail:error:                          | This method is called when a nativeExpressAdView failed to render.If the rendering fails due to network or hardware reasons, you can change the phone or the network environment. It is recommended to upgrade to the latest version of the Pangle platform.  |
-| nativeExpressBannerAdViewWillBecomVisible:                          | This method is called when bannerAdView ad slot shows new ad.                                                                                                                                                                                                 |
-| nativeExpressBannerAdViewDidClick:                                  | This method is called when bannerAdView is clicked.                                                                                                                                                                                                           |
-| nativeExpressBannerAdView:dislikeWithReason:                        | This method is called when the user clicked dislike button and chose dislike reasons.                                                                                                                                                                         |
-| nativeExpressBannerAdViewDidCloseOtherController: interactionType:  | This method is called when another controller has been closed.  interactionType : open appstore in app or open the webpage or view video ad details page.                                                                                                     |
+| nativeExpressBannerAdViewWillBecomVisible:                          | This method is called when bannerAdView ad slot shows new ad.               |
+| nativeExpressBannerAdViewDidClick:                                  | This method is called when bannerAdView is clicked.                          |
+| nativeExpressBannerAdView:dislikeWithReason:                        | This method is called when the user clicked dislike button and chose dislike reasons.  |
+| nativeExpressBannerAdViewDidCloseOtherController: interactionType:  | This method is called when another controller has been closed.  interactionType : open appstore in app or open the webpage or view video ad details page.    |
 
 ### Display Banner
 To show a banner ad, check the `nativeExpressBannerAdViewDidLoad` callback to verify that if the ad is returned. Then check the `nativeExpressBannerAdViewRenderSuccess` to verify if the banner view is rendered successfully. Then a`ddSubview` to display the banner ad.
@@ -71,6 +72,14 @@ Banner ad could only be displayed after receiving `nativeExpressBannerAdViewRend
  //After the callback method, the advertisement is displayed, which can ensure the smooth playing and display, and the user experience is better.
 }
 ```
+
+## Test with test ads
+
+Now you have finished the integration. If you wanna test your apps, make sure you use test ads rather than live, production ads. The easiest way to load test ads is to use test mode. It's been specially configured to return test ads for every request, and you're free to use it in your own apps while coding, testing, and debugging. 
+
+Refer to the [How to add a test device?](https://www.pangleglobal.com/help/doc/5fba365f7b550100157bfc06) to add your device to the test devices on Pangle platform.
+
+
 
 ### Note
 1. At present, banner ads support the center display of the bottom or top of the content, and developers can adjust the left and right margins by themselves.
