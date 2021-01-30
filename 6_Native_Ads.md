@@ -41,26 +41,28 @@ self.adManager = nad;
 **Note**: loadAdDataWithCount allows you to load multi-ads in an ad request. The maximum allowed is `three`.
 
 ### BUNativeAdsManagerDelegate Callback
-
-| nativeAdsManagerSuccessToLoad:  nativeAds:  | This method is called when native ad loaded successfully. You can insert data in this method.  |
+|   BUNativeAdsManagerDelegate Callback  |    Description  |
 |---------------------------------------------|------------------------------------------------------------------------------------------------|
+| nativeAdsManagerSuccessToLoad:  nativeAds:  | This method is called when native ad loaded successfully. You can insert data in this method.  |
 | nativeAdsManager: didFailWithError:         | This method is called when native ad loaded failed.                                            |
 
 ### BUNativeAdDelegate Callback
 
-| nativeAdDidLoad:                                   | This method is called when native ad material loaded successfully.                                                                                                                                                                                                                                                                                                                                          |
-|----------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| nativeAd:didFailWithError:                         | This method is called when native ad materia failed to load.                                                                                                                                                                                                                                                                                                                                                |
-| nativeAdDidBecomeVisible:                          | This method is called when a native ad slot has been shown.                                                                                                                                                                                                                                                                                                                                                 |
-| nativeAdDidCloseOtherController: interactionType:  | This method is called when another controller has been closed.  interactionType : open appstore in app or open the webpage or view video ad details page.                                                                                                                                                                                                                                                   |
-| nativeAdDidClick:withView:                         | This method is called when a native ad is clicked.                                                                                                                                                                                                                                                                                                                                                          |
-| nativeAd:dislikeWithReason:                        |  This method is called when the user clicked dislike reasons.   Only used for dislikeButton in BUNativeAdRelatedView.h                                                                                                                                                                                                                                                                                      |
+|   BUNativeAdDelegate Callback  |    Description  |
+|---------------------------------------------|------------------------------------------------------------------------------------------------|
+| nativeAdDidLoad:                                   | This method is called when native ad material loaded successfully.          |
+| nativeAd:didFailWithError:                         | This method is called when native ad materia failed to load.          |
+| nativeAdDidBecomeVisible:                          | This method is called when a native ad slot has been shown.           |
+| nativeAdDidCloseOtherController: interactionType:  | This method is called when another controller has been closed.  interactionType : open appstore in app or open the webpage or view video ad details page.                                                                               |
+| nativeAdDidClick:withView:                         | This method is called when a native ad is clicked.                    |
+| nativeAd:dislikeWithReason:                        |  This method is called when the user clicked dislike reasons.   Only used for dislikeButton in BUNativeAdRelatedView.h                                                                                                        |
 | registerContainer:withClickableViews:              | Register clickable views in native ads view.  Interaction types can be configured on Pangle Network.  Interaction types include view video ad details page, make a call, send email, download the app, open the webpage using a browser,open the webpage within the app, etc.  containerView : required.  container view of the native ad.  clickableViews : optional.  Array of views that are clickable.  |
 
 ### BUNativeAdRelatedView interface
-
-| refreshData:  | Refresh the data every time you get new datas in order to show ad perfectly.  |
+|   BUNativeAdRelatedView  |    Description  |
 |---------------|-------------------------------------------------------------------------------|
+| refreshData:  | Refresh the data every time you get new datas in order to show ad perfectly.  |
+
 
 #### Display Native Ads：
 When a native ad loads, your app will receive a native ad object via the `nativeAdDidLoad` callback. Your app is then responsible for displaying the ad (though it doesn't necessarily have to do so immediately).
@@ -71,7 +73,7 @@ Instance:
 - (void)nativeAdsManagerSuccessToLoad:(BUNativeAdsManager *)adsManager nativeAds:(NSArray<BUNativeAd *> *_Nullable)nativeAdDataArray {
     //the ad data source is assigned, such as:
     for (BUNativeAd *model in nativeAdDataArray) {
-        [self.dataSource insertObject:model atIndex:0];//self.dataSource为数据源
+        [self.dataSource insertObject:model atIndex:0];
     }
     id model = self.dataSource[0];
     if ([model isKindOfClass:[BUNativeAd class]]) {
@@ -139,6 +141,15 @@ Instance:
     }
 }
 ```
+
+## Test with test ads
+
+Now you have finished the integration. If you wanna test your apps, make sure you use test ads rather than live, production ads. The easiest way to load test ads is to use test mode. It's been specially configured to return test ads for every request, and you're free to use it in your own apps while coding, testing, and debugging. 
+
+Refer to the [How to add a test device?](https://www.pangleglobal.com/help/doc/5fba365f7b550100157bfc06) to add your device to the test devices on Pangle platform.
+
+
+
 
 ### Note
 1. The ad data source is assigned in nativeAdsManagerSuccessToLoad need to call registerContainer:withClickableViews:clickableViews  click and bind the View,and to call  refreshData: to refresh data.
