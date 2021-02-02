@@ -2,20 +2,20 @@
 
 ## Environment requirement
 - IOS 9.X and higher;
-- Xcode 11 and higher;
+- Xcode 12 and higher;
 - Supported architecture: x86-64, armv7, arm64, i386
 
 
 ## Import Pangle SDK through CocoaPods(preferred):
 The simplest way to import the SDK into an iOS project is to use CocoaPods. Open your project's Podfile and add this line to your app's target:
 
-- Note: Import Pangle SDK that the version is higher v3.4.0.0
+- Note: Import Pangle SDK that the version is higher than v3.4.0.0
 ```XML
 pod 'Ads-Global', '~>3.4.1.1' 
 ```
 
 
-- Note: If you wanna import old version of Pangle SDK that the version is lower v3.4.0.0, as shown below:
+- Note: If you wanna import old version of Pangle SDK that the version is lower than v3.4.0.0, as shown below:
 ```XML
 pod 'Bytedance-UnionAD', '~>3.3.6.2'
 ```
