@@ -6,7 +6,7 @@
 - Supported architecture: x86-64, armv7, arm64, i386
 
 
-## Import Pangle SDK through CocoaPods(preferred):
+## Import Pangle SDK through CocoaPods (Recommened):
 The simplest way to import the SDK into an iOS project is to use CocoaPods. Open your project's Podfile and add this line to your app's target:
 
 - Note: Import Pangle SDK that the version is higher than v3.4.0.0
