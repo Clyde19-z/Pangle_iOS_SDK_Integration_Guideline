@@ -5,6 +5,8 @@
 - Xcode 12 and higher;
 - Supported architecture: x86-64, armv7, arm64, i386
 
+**Note: ios 9 is no longer supported starting from v3.5.0.0
+
 
 ## Import Pangle SDK through CocoaPods (Recommened):
 The simplest way to import the SDK into an iOS project is to use CocoaPods. Open your project's Podfile and add this line to your app's target:
