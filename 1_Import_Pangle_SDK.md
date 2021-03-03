@@ -51,7 +51,7 @@ Please make sure that `Copy Bundle Resource` contains `BUAdSDK.bundle`.
 
 #### Add Permissions
 
-Add the parameter `-objc` to `Other Linker Flags` in build settings, and the SDK supports `- all_ load`
+Add the parameter `-ObjC` to `Other Linker Flags` in build settings, and the SDK supports `- all_ load`
 
 ##### Detailed Steps:
 
