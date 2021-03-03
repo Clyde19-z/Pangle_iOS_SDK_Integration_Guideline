@@ -82,7 +82,7 @@ Project needs to find Link Binary With Libraries in `TARGETS` - > `Build Phases`
 - libbz2.tbd
 - libxml2.tbd
 - libiconv.tbd
-- libc++abi.tbd (new required from sdk v3.5.0.0)
+- libc++abi.tbd (newly required from sdk v3.5.0.0)
 - Security.framework
 
 
