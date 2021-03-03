@@ -5,7 +5,7 @@
 - Xcode 12 and higher;
 - Supported architecture: x86-64, armv7, arm64, i386
 
-**Note: ios 9 is no longer supported starting from v3.5.0.0
+**Note: ios 9 is no longer supported starting from v3.5.0.0**
 
 
 ## Import Pangle SDK through CocoaPods (Recommened):
@@ -82,6 +82,7 @@ Project needs to find Link Binary With Libraries in `TARGETS` - > `Build Phases`
 - libbz2.tbd
 - libxml2.tbd
 - libiconv.tbd
+- libc++abi.tbd (new required from sdk v3.5.0.0)
 - Security.framework
 
 
