@@ -37,10 +37,21 @@ All five files need to be imported：BUAdSDK.bundle、BUAdSDK.framework、BUFoun
 ```xml
 pod 'Ads-Global' , :subspecs => ['BUAdSDK','Domestic'] 
 ```
-If you import both `CN Pangle SDK` and `Outside_CN Pangle SDK`, `setTerritory` is required (mark the user as CN or Outside CN), it should be finished before initializing Pangle SDK.
+
+If you want to import both `CN Pangle SDK` and `Outside_CN Pangle SDK`, `setTerritory` is required (mark the user as CN or Outside CN), it should be finished before initializing Pangle SDK.
+
+Publishers should locate the user devices directly. We would suggest to locate users with the following ways:
+
+- Locate user devices through IP address.
+- Locate user devices through GPS info, GPS should be collected by developers, Pangle SDK won't collect GPS info.
+- Locate user devices through developer's user account infomation(If app support) or internal ids.
+
+Once the user is located, then call `setTerritory` according to the user location.
+
 
 **Note**：
-- **This method must be called before initializing Pangle SDK.**
+- **The method `setTerritory` must be called before initializing Pangle SDK.**
+- Publishers are responsible for locating the users.
 - Pangle will not return ads when the territory is incorrect. (For example, you Set Territory to BUAdSDKTerritory_CN but the user's IP is outside of China Mainland and vice versa.)
 
 ```objective-c
