@@ -32,7 +32,7 @@ Create a `BUNativeExpressBannerView` object, and call `loadAdData` on `BUNativeE
 
 ```objective-c
 self.bannerView = [[BUNativeExpressBannerView alloc] initWithSlotID:@"Your_Ad_Placement_Id" rootViewController:self adSize:CGSizeMake(screenWidth, bannerHeigh) IsSupportDeepLink:YES];
-self.bannerView.frame = CGRectMake(0, self.view.height-bannerHeigh, screenWidth, bannerHeigh); //it should be passed in 'point' on iOS 
+self.bannerView.frame = CGRectMake(0, self.view.height-bannerHeigh, screenWidth, bannerHeigh);
 self.bannerView.delegate = self;
 [self.bannerView loadAdData];
 ```
