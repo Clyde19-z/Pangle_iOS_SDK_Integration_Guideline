@@ -41,7 +41,7 @@ Optional：
 
 | Field Definition | Field Name        | Field Type | Remarks                                                              |
 |------------------|-------------------|------------|----------------------------------------------------------------------|
-| interval         | Rotation interval | NSInteger  | The interval of rotation was 30s to 120s, and the shortest was 2.5s. |
+| interval         | Rotation interval | NSInteger  | The interval of rotation was 30s to 120s. |
 
 ### BUNativeExpressBannerViewDelegate Callback
 
