@@ -19,20 +19,20 @@ Create an app and banner ad placement on Pangle platform
 ### Create Banner Object and Request Ads
 
 #### BUNativeExpressBannerView
-Banner ads are requested by `BUNativeExpressBannerView` object. The first step in using one is to instantiate it and set its ad placement Id. Then call `loadAdData` on `BUNativeExpressBannerView` to load a banner ad and call `addSubview` to add banner view into your app layout.
+Banner ads are requested by `BUNativeExpressBannerView` object. The first step in using one is to instantiate it and set its ad placement Id. Then call `loadAdData` on `BUNativeExpressBannerView` to load a banner ad and call `addSubview` to add banner view into your app layout. Size should be passed in 'point' for iOS
 
 Requied：
 
 | Field Definition | Field Name | Field Type | Remarks                                                            |
 |------------------|------------|------------|--------------------------------------------------------------------|
 | slotID           | slot  ID   | NSString   | ad placement ID                                                        |
-| adSize           | ad size    | CGSize     | Ad size must be the same size as the pangle platform configuration |
+| adSize           | ad size    | CGSize     | Ad size must be the same size as the pangle platform configuration, it should be passed in 'point' for iOS |
 
 Create a `BUNativeExpressBannerView` object, and call `loadAdData` on `BUNativeExpressBannerView` to load a banner ad.
 
 ```objective-c
 self.bannerView = [[BUNativeExpressBannerView alloc] initWithSlotID:@"Your_Ad_Placement_Id" rootViewController:self adSize:CGSizeMake(screenWidth, bannerHeigh) IsSupportDeepLink:YES];
-self.bannerView.frame = CGRectMake(0, self.view.height-bannerHeigh, screenWidth, bannerHeigh);
+self.bannerView.frame = CGRectMake(0, self.view.height-bannerHeigh, screenWidth, bannerHeigh); //it should be passed in 'point' on iOS 
 self.bannerView.delegate = self;
 [self.bannerView loadAdData];
 ```
