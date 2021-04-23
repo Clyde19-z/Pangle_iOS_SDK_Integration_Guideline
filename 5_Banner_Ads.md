@@ -26,7 +26,7 @@ Requied：
 | Field Definition | Field Name | Field Type | Remarks                                                            |
 |------------------|------------|------------|--------------------------------------------------------------------|
 | slotID           | slot  ID   | NSString   | ad placement ID                                                        |
-| adSize           | ad size    | CGSize     | Ad size must be the same size as the pangle platform configuration, it should be passed in 'point' for iOS |
+| adSize           | ad size    | CGSize     | Ad size must be the same size as the pangle platform configuration, it should be passed in 'point' on iOS |
 
 Create a `BUNativeExpressBannerView` object, and call `loadAdData` on `BUNativeExpressBannerView` to load a banner ad.
 
