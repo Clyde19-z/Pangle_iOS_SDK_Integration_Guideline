@@ -134,8 +134,6 @@ There are two parts you can get assets after you get an ad.
      }
     ```
 
-  - 
-
 - `BUNativeAdRelatedView`, an object need object `BUNativeAd` by call the `refreshData` method
 
   - You can get logoADImageViewdislikeButton, etc, via `BUNativeAdRelatedView`.
