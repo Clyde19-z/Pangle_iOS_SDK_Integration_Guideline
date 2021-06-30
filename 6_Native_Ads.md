@@ -106,7 +106,7 @@ There are two parts you can get assets after you get an ad.
 
 - `BUMaterialMeta` , a property of `BUNativeAd`
 
-  - You can get  adTitle、adDescription、buttonText of creative button，etc, via `BUMaterialMeta` 
+  - You can get  adTitle、adDescription、buttonText of creative button, etc, via `BUMaterialMeta` .
 
     ```objective-c
     - (void)setNativeAd:(BUNativeAd *)nativeAd {
@@ -118,7 +118,7 @@ There are two parts you can get assets after you get an ad.
     }
     ```
 
-  - You can get ad imageUrl via `BUImage` , a indirect property of `BUMaterialMeta` in `BUNativeAd`
+  - You can get ad imageUrl via `BUImage` , a indirect property of `BUMaterialMeta` in `BUNativeAd`.
 
     ```objective-c
     - (void)setNativeAd:(BUNativeAd *)nativeAd {
@@ -136,7 +136,7 @@ There are two parts you can get assets after you get an ad.
 
 - `BUNativeAdRelatedView`, an object need object `BUNativeAd` by call the `refreshData` method
 
-  - You can get logoADImageViewdislikeButton, etc, via `BUNativeAdRelatedView`.
+  - You can get logoADImageView、dislikeButton, etc, via `BUNativeAdRelatedView`.
 
     ```objective-c
     - (void)setNativeAd:(BUNativeAd *)nativeAd {
@@ -174,7 +174,6 @@ There are two parts you can get assets after you get an ad.
               
               //add videoAdView
               UIView *videoView = _nativeAdRelatedView.videoAdView;
-              videoView.translatesAutoresizingMaskIntoConstraints = NO;
               [_imageView addSubview:videoView];
               
               ...
@@ -271,7 +270,7 @@ Refer to the [How to add a test device?](https://www.pangleglobal.com/help/doc/5
 
 ### Note
 1. The ad data source is assigned in nativeAdsManagerSuccessToLoad need to call `registerContainer:withClickableViews:clickableViews`  click and bind the View,and to call  `refreshData:` to refresh data.
-2. The refreshData: needs to be called after the next native ad is loaded.
+2. The `refreshData:` needs to be called after the next native ad is loaded.
 
 ### Resource
 Demo: [GitHub](https://github.com/bytedance/Bytedance-UnionAD/blob/master/Example/BUDemo/App/Example/controller/BUDFeedViewController.m)
