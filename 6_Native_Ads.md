@@ -1,7 +1,13 @@
 # 6. Native Ads
 
 ## Introduction
-Native ads are ad assets that are presented to users via UI components that are native to the platform. They're shown using the same classes you already use in your view, and can be formatted to match your app's visual design. When a native ad loads, your app receives an ad object that contains its assets, and the app (rather than the SDK) is then responsible for displaying them. This differs from other ad formats, which don't allow you to customize the appearance of the ad.
+Native ads allow you to customize the look and feel of the ads that appear in your app. You design the ads: how they look, where they’re placed, and how they work within your existing app design. This differs from other ad formats, which don't allow you to customize the appearance of the ad.
+
+
+
+**Note: Pangle supports 4 forms outside the chinese mainland: Large image with 1.91:1 ratio、1280\*720 video、square image、 square video.**
+
+
 
 ## Precondition
 Create an app and native ad placement on Pangle platform
@@ -13,18 +19,39 @@ Create an app and native ad placement on Pangle platform
 
 ## Native Ads Implementation
 
-Broadly speaking,  there are two parts to successfully implementing native ads:
+Native ads are ad assets that are presented to users via UI components. It can be formatted to match your app's visual design. When a native ad loads, your app receives an ad object that contains its assets, and the app is then responsible for displaying them.
 
+Broadly speaking, there are three steps to successfully implement Native Ads:
+
+- Design your native ad layout
 - Load an ad 
-- Display the ad  
+- Display the ad content in your app
+
+### Design your native ad layout
+
+Before loading a native ad, you should have finished the design of a native ad. You can do this in the Interface Builder as you would when creating any other xib file or manual layout via code.
+
+Interface Builder Example as below:
+
+<img src="https://github.com/Clyde19-z/Pangle_iOS_SDK_Integration_Guideline/blob/main/nativeUI.png"/>
+
+Then get the native example view from Nib file in the mainBundle:
+
+```objective-c
+BUDNativeExampleView *adView = [[NSBundle mainBundle]loadNibNamed:@"BUDNativeExampleView" owner:nil options:nil].firstObject;
+```
+
+
 
 ### Load an ad 
 
-Native ads are loaded via `BUNativeAd` object.
+Native ads are loaded via `BUNativeAd` object, which has the `loadAdData` method used to load native ads. The `BUNativeAd` object requires `BUAdSlot` 、 `RootViewController`、 `BUNativeAdDelegate` instances.The Native Ad Object is returned as a parameter in the  `nativeAdDidLoad:view:` callback.
 
-##### Configure the BUAdSlot
 
-Before you can load an ad, you have to initialize and configure the `BUAdSlot`. The following code demonstrates how to initialize a  `BUAdSlot`:
+
+#### Configure the BUAdSlot
+
+Before you can load an ad, it is needed to initialize and configure the `BUAdSlot`. The following code demonstrates how to initialize a  `BUAdSlot`:
 
 ```objective-c
 BUAdSlot *adslot = [[BUAdSlot alloc] init];
@@ -35,28 +62,47 @@ adslot.imgSize = [BUSize sizeBy:BUProposalSize_Feed690_388];
 
 
 
-##### Get notified of native ad events
+#### Set RootViewController
+
+The root view controller handling ad actions is requred to be set to the `BUNativeAd`:
+
+```objective-c
+_nativeAd = [[BUNativeAd alloc] initWithSlot:adslot];
+_nativeAd.rootViewController = self;
+```
+
+
+
+#### Set BUNativeAdDelegate
 
 - To be notified of events related to the native ad interactions, set the delegate property of the native ad:
 
   ```objective-c
-  _nativeAd = [[BUNativeAd alloc] initWithSlot:adslot];
   _nativeAd.delegate = self;
   ```
 
-- Then implement to `BUNativeAdDelegate` to receive the following delegate calls:
+- Then implement to `BUNativeAdDelegate` to receive the following delegate calls. The methods of the protocol are all optional.
+
+  The following example shows how to implement the delegate protocol:
 
   ```objective-c
-  #pragma mark - BUNativeAdDelegate
-  - (void)nativeAdDidLoad:(BUNativeAd *)nativeAd view:(UIView *)view {
-      _statusLabel.text = @"Ad loaded";
-  }
+  @interface BUDFeedViewController () <BUNativeAdDelegate>
+    
+  @end
+    
+  @implementation BUDFeedViewController
   
-  - (void)nativeAd:(BUNativeAd *)nativeAd didFailWithError:(NSError *_Nullable)error {
-      _statusLabel.text = @"Ad loaded fail";
-  }
+      #pragma mark - BUNativeAdDelegate
+      - (void)nativeAdDidLoad:(BUNativeAd *)nativeAd view:(UIView *)view {
+          _statusLabel.text = @"Ad loaded";
+      }
   
-  ...
+      - (void)nativeAd:(BUNativeAd *)nativeAd didFailWithError:(NSError *_Nullable)error {
+          _statusLabel.text = @"Ad loaded fail";
+      }
+  
+      ...
+  @end
   ```
 
 - BUNativeAdDelegate Callback Description
@@ -73,40 +119,90 @@ adslot.imgSize = [BUSize sizeBy:BUProposalSize_Feed690_388];
   | nativeAd:dislikeWithReason:                       | This method is called when the user clicked dislike reasons.                                                                              Only used for dislikeButton in BUNativeAdRelatedView.h |
   | nativeAd:adContainerViewDidRemoved:               | This method is called when the Ad view container is forced to be removed. |
 
+#### Request the ad
 
-
-##### Request the ad
-
-Once your `BUAdSlot` is initialized and configured, call `loadAdData` method of `BUNativeAd`to request an ad:
+Once your `BUNativeAd` have been initialized and configured , call `loadAdData` method on`BUNativeAd ` object to request an ad:
 
 ```objective-c
-_nativeAd = [[BUNativeAd alloc] initWithSlot:adslot];
-_nativeAd.delegate = self;
-_nativeAd.rootViewController = self;
 [_nativeAd loadAdData];
+```
+
+**Sample code:**
+
+```objective-c
+// Your FeedViewController
+
+#import "BUDFeedViewController.h"
+#import <BUAdSDK/BUAdSDK.h>
+#import "BUDNativeExampleView.h"
+
+@interface BUDFeedViewController () <BUVideoAdViewDelegate,BUNativeAdDelegate>
+  
+@property (nonatomic, strong) UILabel *statusLabel;
+@property (nonatomic, strong) BUNativeAd *nativeAd;
+@property (nonatomic, strong) UIScrollView *scrollView;
+@property (nonatomic, strong) BUDNativeExampleView *adView;
+
+@end
+
+@implementation BUDFeedViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+  }
+
+- (void)loadAd:(UIButton *)sender {
+    if (_adView) {
+        [_adView removeFromSuperview];
+        _adView = nil;
+    }
+  	// Configure the BUAdSlot
+    BUAdSlot *adslot = [[BUAdSlot alloc] init];
+    adslot.ID = @"Your_Ad_Placement_Id";
+    adslot.AdType = BUAdSlotAdTypeFeed;
+    adslot.imgSize = [BUSize sizeBy:BUProposalSize_Feed690_388];
+    
+    // initialize and configure the BUNativeAd object
+    _nativeAd = [[BUNativeAd alloc] initWithSlot:adslot];
+    _nativeAd.rootViewController = self;
+    _nativeAd.delegate = self;
+  
+    // load the Ad with BUNativeAd
+    [_nativeAd loadAdData];
+}
+
+#pragma mark - BUNativeAdDelegate
+
+- (void)nativeAdDidLoad:(BUNativeAd *)nativeAd view:(UIView *)view {
+    _statusLabel.text = @"Ad loaded";
+}
+
+- (void)nativeAd:(BUNativeAd *)nativeAd didFailWithError:(NSError *_Nullable)error {
+    _statusLabel.text = @"Ad loaded fail";
+}
+...
+  
+@end
+
 ```
 
 
 
-### Display the ad  
+### Display the ad content in your app  
 
-Once you have loaded an ad, all that remains is to display it to your users. 
-
-#####  Style native ad layouts
-
-Lay out the `UIViews` that will display native ad assets. You can do this in the Interface Builder as you would when creating any other xib file or manual layout via code.
+Once you have loaded an ad, all that remains is to display it to your users.(Though it doesn't necessarily have to do so immediately).
 
 
 
-##### Set native ad assets to your customized native view
+#### Set native ad assets to your customized native view
 
-For the native ad you have got, there is a corresponding class: `BUNativeAd`.
+For the native ad you have accessed, there is a corresponding class: `BUNativeAd`.
 
-There are two parts you can get assets after you get an ad.
+There are two parts you can obtain assets  with the ad.
 
 - `BUMaterialMeta` , a property of `BUNativeAd`
 
-  - You can get  adTitle、adDescription、buttonText of creative button, etc, via `BUMaterialMeta` .
+  - You can get adTitle、adDescription、buttonText of creative button, etc, via `BUMaterialMeta` .
 
     ```objective-c
     - (void)setNativeAd:(BUNativeAd *)nativeAd {
@@ -134,9 +230,11 @@ There are two parts you can get assets after you get an ad.
      }
     ```
 
-- `BUNativeAdRelatedView`, an object need object `BUNativeAd` by call the `refreshData` method
+- `BUNativeAdRelatedView`, an object need to pass `BUNativeAd` when call the `refreshData` method on which.
 
-  - You can get logoADImageView、dislikeButton, etc, via `BUNativeAdRelatedView`.
+  - You can add ad logo、ad label、dislikeButton, etc, via `BUNativeAdRelatedView`.The
+
+    `Logo` and `ad label` are required to add to the `Native ads`.  `logoADImageView` is recommended, which contains logo and ad label. It needed to actively add dislikeButton in order to deal with the feedback and improve the accuracy of ad.
 
     ```objective-c
     - (void)setNativeAd:(BUNativeAd *)nativeAd {
@@ -145,7 +243,7 @@ There are two parts you can get assets after you get an ad.
         self.nativeAdRelatedView = [[BUNativeAdRelatedView alloc] init];
         // required
         [self.nativeAdRelatedView refreshData:_nativeAd];
-        // add logo
+        // add Pangle AD logo
         UIView *logo = _nativeAdRelatedView.logoADImageView;
         [_imageView addSubview:logo];
         ...
@@ -158,15 +256,20 @@ There are two parts you can get assets after you get an ad.
     }
     ```
 
-  - You can get videoAdView via `BUNativeAdRelatedView` as well.
+    **Note：**
+
+    1. The `refreshData:` needs to be called on `BUNativeAdRelatedView` every time you get new datas in order to show ad perfectly.
+    2. The `registerContainer:withClickableViews:clickableViews`  must be called on `BUNativeAd` , which provides data binding of native ads and reporting of click events, to register and bind the view to be clicked, including images, buttons, etc, otherwise we can't confirm whether the display is an ad. And The click events  (jump to ad page, download, call, etc.) registered by BUNativeAd are controlled by the SDK. 
+
+    
+
+  - You can get video view via `BUNativeAdRelatedView` as well.
 
     ```objective-c
     - (void)setNativeAd:(BUNativeAd *)nativeAd {
         _nativeAd = nativeAd;
     
         self.nativeAdRelatedView = [[BUNativeAdRelatedView alloc] init];
-        // required
-        [self.nativeAdRelatedView refreshData:_nativeAd];
       
         // video
         if (mode == BUFeedVideoAdModeImage ||mode == BUFeedADModeSquareVideo) {
@@ -182,9 +285,7 @@ There are two parts you can get assets after you get an ad.
     }
     ```
 
-
-
-##### Get notified of videoAdView events
+#### Get notified of videoAdView events
 
 - To be notified of events related to the native ad `videoAdView` interactions if the ad inclueds a video, set the delegate property of the `BUVideoAdView`:
 
@@ -223,11 +324,9 @@ There are two parts you can get assets after you get an ad.
 
 
 
+#### Update the size of native ad view 
 
-
-##### Update the size of native ad view 
-
-You can get the scale of the image or video in two ways：
+You can get the aspect ratio of the image or video in two ways：
 
 -  via `BUImage`in the `BUNativeAd.data.imageAry.firstObject`
 
@@ -268,9 +367,6 @@ Now you have finished the integration. If you wanna test your apps, make sure yo
 Refer to the [How to add a test device?](https://www.pangleglobal.com/help/doc/5fba365f7b550100157bfc06) to add your device to the test devices on Pangle platform.
 
 
-### Note
-1. The ad data source is assigned in nativeAdsManagerSuccessToLoad need to call `registerContainer:withClickableViews:clickableViews`  click and bind the View,and to call  `refreshData:` to refresh data.
-2. The `refreshData:` needs to be called after the next native ad is loaded.
 
 ### Resource
 Demo: [GitHub](https://github.com/bytedance/Bytedance-UnionAD/blob/master/Example/BUDemo/App/Example/controller/BUDFeedViewController.m)
