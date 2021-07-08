@@ -1,14 +1,26 @@
 # 1. Import Pangle SDK
 
+
+
+**This guide is for publishers who want to monetize an iOS app with the traffic outside of china.**
+
+
+
 ## Environment requirement
 - IOS 10.X and higher;
 - Xcode 12 and higher;
 - Supported architecture: x86-64, armv7, arm64, i386
 
-**Note: ios 9 is no longer supported starting from v3.5.0.0**
+**Note: ios 9 is no longer supported starting from v3.5.0.**
 
 
-## Import Pangle SDK through CocoaPods (Recommened):
+
+## Import Pangle SDK
+
+
+
+#### CocoaPods (Recommened):
+
 The simplest way to import the SDK into an iOS project is to use CocoaPods. Open your project's Podfile and add this line to your app's target:
 
 - Note: Import Pangle SDK that the version is higher than v3.4.0.0
@@ -24,7 +36,8 @@ pod 'Bytedance-UnionAD', '~>3.3.6.2'
 
 
 
-## Download Pangle SDK Manually:
+#### Download Pangle SDK Manually:
+
 Download and unzip the SDK framework from Pangle Platform directly, and import the following frameworks and bundles into your Xcode project manually:
 
 - `BUAdSDK.framework`
@@ -45,9 +58,7 @@ Please make sure that `Copy Bundle Resource` contains `BUAdSDK.bundle`.
 
 
 
-
-
-### Xcode Compiler Option Settings
+## Xcode Compiler Option Settings
 
 #### Add Permissions
 
@@ -86,11 +97,13 @@ Project needs to find Link Binary With Libraries in `TARGETS` - > `Build Phases`
 - Security.framework
 
 
+
 **Note: Add the `ImageIO.framework` if the above dependency library is still reporting errors.**
 
 ##### Detailed Steps:
 
 <img src="https://github.com/JohnnyWangMiura/Pangle-iOS-SDK-Integration-Guideline/blob/main/library.png"/>
+
 
 
 #### Add language configuration
