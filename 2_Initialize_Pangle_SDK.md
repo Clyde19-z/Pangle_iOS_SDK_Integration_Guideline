@@ -1,55 +1,169 @@
 # 2. Initialize Pangle SDK
 
 
-## Pass Appid to initialize Pangle SDK
-You must initialize Pangle SDK before loading Pangle ads. This needs to be done only once, ideally at App launch stage(in AppDelegate method).
+
+Initialize Pangle SDK asynchronously is supported **since the v3.6.0.0**. And there is a `BUAdSDKConfiguration` class,  through which any setup should be passed in the new initialization flow. Please call `startWithSyncCompletionHandler:`  or `startWithAsyncCompletionHandler:`on Class `BUAdSDKManager`  to initializes the SDK before you send any ad requests（ **the old initialization method still works in the new sdk**）. Init only need to be called once per app’s lifecycle, we **strongly recommend** to do this in the method `application:didFinishLaunchingWithOptions:` on app launch.
+
+
 
 ```objective-c
-//pass appid to initialize pangle sdk
-[BUAdSDKManager setAppID:@"Your_Pangle_App_Id"];
+// The synchronize initialization method of Pangle
+// @param completionHandler Callback to the initialization state of the calling thread
++ (void)startWithSyncCompletionHandler:(BUCompletionHandler)completionHandler;
+
+// The asynchronize initialization method of Pangle
+// @param completionHandler Callback to the initialization state of the non-main thread
++ (void)startWithAsyncCompletionHandler:(BUCompletionHandler)completionHandler;
 ```
-**Warning: Ads may be preloaded by the Pangle Ads SDK or mediation partner SDKs after initial. If you need to obtain consent from users in the European Economic Area (EEA) or users under age, please ensure you do so before initializing the Pangle Ads SDK.**
+
+
+
+You will be informed the result of the initialization by the block callback  `BUCompletionHandler`
+
+```objective-c
+typedef void (^BUCompletionHandler)(BOOL success,NSError *error);
+```
+
+
+
+**Note: Be sure to pass your AppID to Object `BUAdSDKConfiguration` before initializing the SDK after v3.6.0.0.**
+
+Example as below:
+
+```objective-c
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
+    // setUP BUAdSDK
+    BUAdSDKConfiguration *configuration = [BUAdSDKConfiguration configuration];
+  
+    // This property must be set when integrating 'CN Pangle SDK' and 'Outside_CN Pangle SDK' into an APP, otherwise there is no need to set. You‘d better set Territory first if needed.
+    configuration.territory = BUAdSDKTerritory_NO_CN;
+    // GDPR: 0 close privacy protection, 1 open privacy protection. optional
+    configuration.GDPR = @(0);
+    // Coppa: 0 adult, 1 child. optional
+    configuration.coppa = @(0);
+  	// pass appID to initialize Pangle sdk
+    configuration.appID = @"Your_App_Id";
+  
+#if DEBUG
+  	// configure development mode. default BUAdSDKLogLevelNone
+    configuration.logLevel = BUAdSDKLogLevelDebug;
+#endif
+  
+    [BUAdSDKManager startWithAsyncCompletionHandler:^(BOOL success, NSError *error) {
+        // Pangle SDK has been successfully initialized
+        // load pangle ads after this method is triggered.
+				if (success) {
+            
+        }
+      	...
+    }];
+       
+    return YES;
+}
+```
+
+
+
+**Before v3.6.0.0**,  please call the method `setAppID:`  on Class `BUAdSDKManager` to initialize Pangle SDK directly.
+
+Example as below:
+
+```objective-c
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+   
+    // initialize AD SDK
+  
+    // This property must be set when integrating 'CN Pangle SDK' and 'Outside_CN Pangle SDK' into an APP, otherwise there is no need to set. You‘d better set Territory first if needed.
+    [BUAdSDKManager setTerritory:BUAdSDKTerritory_CN];
+    // GDPR: 0 close privacy protection, 1 open privacy protection. optional
+    [BUAdSDKManager setGDPR:0];
+    // Coppa: 0 adult, 1 child. optional
+    [BUAdSDKManager setCoppa:0]; 
+    // pass appID to initialize Pangle sdk
+    [BUAdSDKManager setAppID:@"Your_App_Id"];
+  
+#if DEBUG
+    // Whether to open log. default is none.
+    [BUAdSDKManager setLoglevel:BUAdSDKLogLevelDebug];
+#endif
+  
+
+    return YES;
+}
+```
+
+
+
+**Warning: Ads may be preloaded by the Pangle Ads SDK or mediation partner SDKs after initialization. If you need to obtain consent from users in the European Economic Area (EEA) or users under age, please ensure you do so before initializing the Pangle Ads SDK.**
 
 ### Interface Instruction
-Currently, the `BUAdSDKManager` interface provides the following class methods.
+Currently, the `BUAdSDKConfiguration` Class provides the following method and property.
 
 ```objective-c
-@property (nonatomic, copy, readonly, class) NSString *SDKVersion;
-​
-/// Register the App key that’s already been applied before requesting an ad from Pangle Plarform.                                                       @param appID : the unique identifier of the App
-+ (void)setAppID:(NSString *)appID;
+@interface BUAdSDKConfiguration : NSObject
 
-///This property should be set when integrating non-China areas at the same time, otherwise it does not need to be set.you‘d better set Territory first,  if you need to set them.                                                      @param territory : Regional value: 1.BUAdSDKTerritory_CN  2.BUAdSDKTerritory_NO_CN
-+ (void)setTerritory:(BUAdSDKTerritory)territory;
++ (instancetype)configuration;
 
- ///Configure development mode.                                            @param level : default BUAdSDKLogLevelNone
-+ (void)setLoglevel:(BUAdSDKLogLevel)level;
+// This property should be set when integrating non-China and china areas at the same time,
+// otherwise it need'nt to be set.you‘d better set Territory first,  if you need to set them
+@property (nonatomic, assign) BUAdSDKTerritory territory;
 
-///Set the COPPA of the user, COPPA is the short of Children's Online Privacy Protection Rule, the interface only works in the United States.              @params Coppa 0 adult, 1 child
-+ (void)setCoppa:(NSUInteger)Coppa;
-​
-/// Set the user's keywords, such as interests and hobbies, etc.
-/// Must obtain the consent of the user before incoming.
-+ (void)setUserKeywords:(NSString *)keywords;
-​
-/// set additional user information.
-+ (void)setUserExtData:(NSString *)data;
-​
-///Fields to indicate SDK whether the user grants consent for personalized ads, the value of GDPR : 0 User has granted the consent for personalized ads, SDK will return personalized ads; 1: User doesn't grant consent for personalized ads, SDK will only return non-personalized ads.
-+ (void)setGDPR:(NSInteger)GDPR;
-​​
-/// Notice that Developers must open GDPR Privacy for the user before setAppID.
-+ (void)openGDPRPrivacyFromRootViewController:(UIViewController *)rootViewController confirm:(BUConfirmGDPR)confirm;
+// Register the App key that’s already been applied before requesting an ad from TikTok Audience Network.
+// the unique identifier of the App
+@property (nonatomic, copy) NSString *appID;
 
-​
-/// get appID
-+ (NSString *)appID;
-​
-/// get GDPR
-+ (NSInteger)GDPR;
+// Configure development mode. default BUAdSDKLogLevelNone
+@property (nonatomic, assign) BUAdSDKLogLevel logLevel;
+
+// the COPPA of the user, COPPA is the short of Children's Online Privacy Protection Rule,
+// the interface only works in the United States.
+// Coppa 0 adult, 1 child
+// You can change its value at any time
+@property (nonatomic, strong) NSNumber *coppa;
+
+// additional user information.
+@property (nonatomic, copy) NSString *userExtData;
+
+// Solve the problem when your WKWebview post message empty,
+// default is BUOfflineTypeWebview
+@property (nonatomic, assign) BUOfflineType webViewOfflineType;
+
+// Custom set the GDPR of the user,GDPR is the short of General Data Protection Regulation,the interface only works in The European.
+// GDPR 0 close privacy protection, 1 open privacy protection
+// You can change its value at any time
+@property (nonatomic, strong) NSNumber *GDPR;
+
+// Custom set the CCPA of the user,CCPA is the short of General Data Protection Regulation,the interface only works in USA.
+// CCPA  0: "sale" of personal information is permitted, 1: user has opted out of "sale" of personal information -1: default
+@property (nonatomic, strong) NSNumber *CCPA;
+
+@property (nonatomic, strong) NSNumber *themeStatus;
+
+/// Custom set the AB vid of the user. Array element type is NSNumber
+@property (nonatomic, strong) NSArray<NSNumber *> *abvids;
+
+// Custom set the tob ab sdk version of the user.
+@property (atomic, copy) NSString *abSDKVersion;
+
+// Custom set idfa value
+// You can change its value at any time
+@property (nonatomic, copy) NSString *customIdfa;
+
+/**
+ Whether to allow SDK to modify the category and options of AVAudioSession when playing audio, default is NO.
+ The category set by the SDK is AVAudioSessionCategoryAmbient, and the options are AVAudioSessionCategoryOptionDuckOthers
+ */
+@property (atomic, assign) BOOL allowModifyAudioSessionSetting;
+
+@end
+
+NS_ASSUME_NONNULL_END
 ```
 
 See SDK Demo Project or [GitHub](https://github.com/bytedance/Bytedance-UnionAD/blob/master/Example/BUDemo/AppDelegate.m) for more details.
+
+
 
 ## GDPR
 Pangle provides a tool for publishers to request consent for personalized ads as well as to handle certain requirements. Publishers can use the following method to handle these requests by showing a single a form, as all of the configuration happens in the Funding Choices UI.
