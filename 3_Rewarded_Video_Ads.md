@@ -2,9 +2,13 @@
 # 3. Rewarded Video Ads
 ## Introduction
 Rewarded video is a full-screen video ad. Users can get rewards after watching the video. At present, the forms of Pangle rewarded video ads can:
-1. Display a Endcard after the video
-2. Display a playable ad after the video
-3. Display a playable ad directly.
+- Display a Endcard after the video.
+
+- Display a playable ad after the video.
+
+- Display a playable ad directly.
+
+
 
 ## Precondition
 Create an app and reward video ad placement on Pangle platform
@@ -14,21 +18,38 @@ Create an app and reward video ad placement on Pangle platform
 
   - Create an ad placement：[Application] -> [Ad Placements] -> [Add Ad Placement] -> [Rewarded Video Ads]
     - Reference：[How do I create an ad placement?](https://www.pangleglobal.com/jp/help/doc/5e62079cfe8738000fd184cf)
-   
-   
-### Parameter Setting：
+
+
+
+### Pangle Platform Parameter Setting：
+
 - `Orienation`: Select the orientation of the video.
 - `Reward amount`: Enter the number of reward items the user will receive. Must be a whole number.
-- `Reward item`: Enter the name of reward item the user will receive. Examples: Coins, extra lives
+- `Reward item`: Enter the name of reward item the user will receive. Examples: Coins, extra lives.
 - `Reward deliver setting`：Validate each completed rewarded video ad view by the third-party server and ensure you're only rewarding users who have actually finished watching the video in your app.
+
 
 
 ## Rewarded Video Implementation
 
-### Create RewardedVideo Object and Request Ads
+The main steps to integrate rewarded video ads are:
 
-#### BURewardedVideoAd
-Rewarded ads are requested and shown by BURewardedVideoAd objects. The first step is initialize an object and set its ad placement ID.
+- Load an Rewarded ad.
+- Set ad delegate event callback.
+- Display the ad.
+- Preload a Rewarded Ad.
+
+
+
+### Load a Rewarded Ad
+
+Loading a rewarded ad is accomplished using the `loadAdData` method on the `BURewardedVideoAd` Object. The loaded `BURewardedVideoAd` object is provided as a parameter in the `rewardedVideoAdDidLoad:`and `rewardedVideoAdVideoDidLoad:` callback.
+
+
+
+#### Create the RewardedVideo Object
+
+Rewarded ads are requested and shown by `BURewardedVideoAd` Object, which needed to be created before loading ads.  The `BURewardedVideoAd` object requires two parameters: a String 'slotID' which is the unique identifier of Rewarded Ad Placement and a  `BURewardedVideoModel` Object which is a user-related model configuration containing the property like  `userId`, `rewardName`, and `rewardAmount`, etc. 
 
 Requied：
 
@@ -43,22 +64,29 @@ Optional：
 | userId           | unique user identifier | NSString   | Call SDK pass-through，app's unique user identifier.It isn't null. |
 | extra            | Extra                  | NSString   | Expected json serialized string                                    |
 
-
-
-To load a rewarded ad, call `loadAdData` on the `BURewardedVideoAd` object
-
-Instance:
-
 ```objective-c
 //It is required to generate a new BURewardedVideoAd object each time calling the loadAdData method to request the latest rewarded video ad. Please do not reuse the local cache rewarded video ad.
 BURewardedVideoModel *model = [[BURewardedVideoModel alloc] init];
 model.userId = @"123";
 self.rewardedVideoAd = [[BURewardedVideoAd alloc] initWithSlotID:@"Your_Ad_Placement_Id" rewardedVideoModel:model];
+```
+
+
+
+#### Load a Rewarded Video 
+
+Calling the`loadAdData` method on the `BURewardedVideoAd` object to load a rewarded ad.
+
+```objective-c
 self.rewardedVideoAd.delegate = self;
 [self.rewardedVideoAd loadAdData];
 ```
 
+**Note: It is required to generate a new BURewardedVideoAd object each time calling the loadAdData method to request the latest rewarded video ad. Please do not reuse the local cache rewarded video ad.**
 
+
+
+### Set ad delegate event callback
 
 ###  BURewardedVideoAdDelegate Callback
 | BURewardedVideoAdDelegate Callback                         | Description                                                                                                                                   |
