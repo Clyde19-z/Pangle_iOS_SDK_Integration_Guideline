@@ -43,13 +43,13 @@ The main steps to integrate rewarded video ads are:
 
 ### Load a Rewarded Ad
 
-Loading a rewarded ad is accomplished using the `loadAdData` method on the `BURewardedVideoAd` Object. The loaded `BURewardedVideoAd` object is provided as a parameter in the `rewardedVideoAdDidLoad:`and `rewardedVideoAdVideoDidLoad:` callback.
+Loading a rewarded ad is accomplished using the `loadAdData` method on the `BURewardedVideoAd` object. The loaded `BURewardedVideoAd` object is provided as a parameter in the `rewardedVideoAdDidLoad:`and `rewardedVideoAdVideoDidLoad:` callback.
 
 
 
 #### Create the RewardedVideo Object
 
-Rewarded ads are requested and shown by `BURewardedVideoAd` Object, which needed to be created before loading ads.  The `BURewardedVideoAd` object requires two parameters: a String 'slotID' which is the unique identifier of Rewarded Ad Placement and a  `BURewardedVideoModel` Object which is a user-related model configuration containing the property like  `userId`, `rewardName`, and `rewardAmount`, etc. 
+Rewarded ads are requested and shown by `BURewardedVideoAd` object, which needed to be created before loading ads.  The `BURewardedVideoAd` object requires two parameters: a String 'slotID' which is your ad unit ID and a  `BURewardedVideoModel` object which is a user-related configuration containing the property like  `userId`, `rewardName`, and `rewardAmount`, etc. 
 
 Requied：
 
@@ -78,7 +78,6 @@ self.rewardedVideoAd = [[BURewardedVideoAd alloc] initWithSlotID:@"Your_Ad_Place
 Calling the `loadAdData` method on the `BURewardedVideoAd` object to load a rewarded ad.
 
 ```objective-c
-self.rewardedVideoAd.delegate = self;
 [self.rewardedVideoAd loadAdData];
 ```
 
@@ -88,17 +87,24 @@ self.rewardedVideoAd.delegate = self;
 
 ### Register Ad Event Callbacks
 
-Once the rewarded ad is loaded, these ad event callbacks, which be provided by the protocol **BURewardedVideoAdDelegate** , will be invoked at the corresponding time for app to get notifications of rewarded ad lifecycle.
+In order to receive notifications for rewarded ad lifecycle and interactive events , you must implement the protocol **BURewardedVideoAdDelegate ** and assign it to the `delegate` property of the returned ad.
 
 ```objective-c
 #import "BUDRewardedVideoAdViewController.h"
 #import <BUAdSDK/BUAdSDK.h>
 
 @interface BUDRewardedVideoAdViewController () <BURewardedVideoAdDelegate>
+@property (nonatomic, strong) BUNativeExpressRewardedVideoAd *rewardedAd;
 
 @end
 
 @implementation BUDRewardedVideoAdViewController
+
+- (void)loadRewardVideoAdWithSlotID:(NSString *)slotID {
+		...
+    self.rewardedVideoAd.delegate = self;
+    [self.rewardedVideoAd loadAdData];
+}
 
 #pragma mark - BURewardedVideoAdDelegate
 - (void)rewardedVideoAdDidLoad:(BURewardedVideoAd *)rewardedVideoAd {
@@ -156,6 +162,8 @@ Once the rewarded ad is loaded, these ad event callbacks, which be provided by t
 @end
 ```
 
+
+
 #### BURewardedVideoAdDelegate Callback Instruction
 
 | BURewardedVideoAdDelegate Callback                         | Description                                                                                                                                   |
@@ -203,8 +211,8 @@ A best practice is to load another rewarded ad in the `rewardedVideoAdDidClose:`
 
 ```objective-c
 - (void)rewardedVideoAdDidClose:(BURewardedVideoAd *)rewardedVideoAd {
-    //The original BURewardedVideoAd object can be set to nil in this callback
-    //Start loading the next rewarded video ad here.
+    // The original BURewardedVideoAd object can be set to nil in this callback
+    // Start loading the next rewarded video ad here.
 }
 ```
 
@@ -272,7 +280,7 @@ Instance:
 
 
 ## Note
-1. All the rootViewController parameters in Ad APIs must be provided to process ad redirects.In the SDK, all redirects use the present method. Therefore, make sure that the passed rootViewController parameters are not null and do not have other present controllers. Otherwise the present will fail because presentedViewController already exists.
+1. All the rootViewController parameters in Ad APIs must be provided to process ad redirects. In the SDK, all redirects use the present method of UIViewController. Therefore, make sure that the passed rootViewController parameters are not null and do not have other present controllers. Otherwise the present will fail because presentedViewController already exists.
 2. Select the server callback, please ensure that the type of userid is NSString and not empty. The callback URL instance
 ```json
 {
@@ -281,7 +289,7 @@ Instance:
 ```
 
 3. In order to ensure smooth playback and display, we recommend to check the `rewardedVideoAdVideoDidLoad:` callback before showing the ad to verify if the video is finished loading and cached successfully.
-4. The `extra` , a property of Object `BURewardedVideoModel`should be the string serialized by JSON to ensure that it is not null.
+4. The `extra` , a property of object  `BURewardedVideoModel `should be a string serialized by JSON to ensure that it is not null.
 5. The `isAdValid` method has been deprecated since V3.3.0.0. Please do not use this field to verify whether the reward video ad is valid.
 
 ## Resource
