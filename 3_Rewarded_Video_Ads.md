@@ -34,8 +34,8 @@ Create an app and reward video ad placement on Pangle platform
 
 The main steps to integrate rewarded video ads are:
 
-- Load an Rewarded ad.
-- Set ad delegate event callback.
+- Load a Rewarded ad.
+- Register ad event callbacks.
 - Display the ad.
 - Preload a Rewarded Ad.
 
@@ -75,20 +75,89 @@ self.rewardedVideoAd = [[BURewardedVideoAd alloc] initWithSlotID:@"Your_Ad_Place
 
 #### Load a Rewarded Video 
 
-Calling the`loadAdData` method on the `BURewardedVideoAd` object to load a rewarded ad.
+Calling the `loadAdData` method on the `BURewardedVideoAd` object to load a rewarded ad.
 
 ```objective-c
 self.rewardedVideoAd.delegate = self;
 [self.rewardedVideoAd loadAdData];
 ```
 
-**Note: It is required to generate a new BURewardedVideoAd object each time calling the loadAdData method to request the latest rewarded video ad. Please do not reuse the local cache rewarded video ad.**
+**Note:**  It is required to generate a new BURewardedVideoAd object each time calling the loadAdData method to request the latest rewarded video ad. Please do not reuse the local cache rewarded video ad.
 
 
 
-### Set ad delegate event callback
+### Register Ad Event Callbacks
 
-###  BURewardedVideoAdDelegate Callback
+Once the rewarded ad is loaded, these ad event callbacks, which be provided by the protocol **BURewardedVideoAdDelegate** , will be invoked at the corresponding time for app to get notifications of rewarded ad lifecycle.
+
+```objective-c
+#import "BUDRewardedVideoAdViewController.h"
+#import <BUAdSDK/BUAdSDK.h>
+
+@interface BUDRewardedVideoAdViewController () <BURewardedVideoAdDelegate>
+
+@end
+
+@implementation BUDRewardedVideoAdViewController
+
+#pragma mark - BURewardedVideoAdDelegate
+- (void)rewardedVideoAdDidLoad:(BURewardedVideoAd *)rewardedVideoAd {
+  
+}
+
+- (void)rewardedVideoAdVideoDidLoad:(BURewardedVideoAd *)rewardedVideoAd {
+
+}
+
+- (void)rewardedVideoAd:(BURewardedVideoAd *)rewardedVideoAd didFailWithError:(NSError *)error {
+  
+}
+
+- (void)rewardedVideoAdWillVisible:(BURewardedVideoAd *)rewardedVideoAd {
+    
+}
+
+- (void)rewardedVideoAdDidVisible:(BURewardedVideoAd *)rewardedVideoAd{
+   
+}
+
+- (void)rewardedVideoAdWillClose:(BURewardedVideoAd *)rewardedVideoAd{
+    
+}
+
+- (void)rewardedVideoAdDidClose:(BURewardedVideoAd *)rewardedVideoAd {
+
+}
+
+- (void)rewardedVideoAdDidClick:(BURewardedVideoAd *)rewardedVideoAd {
+    
+}
+
+- (void)rewardedVideoAdDidPlayFinish:(BURewardedVideoAd *)rewardedVideoAd didFailWithError:(NSError *)error {
+   
+}
+
+- (void)rewardedVideoAdServerRewardDidFail:(BURewardedVideoAd *)rewardedVideoAd error:(nonnull NSError *)error {
+    
+}
+
+- (void)rewardedVideoAdDidClickSkip:(BURewardedVideoAd *)rewardedVideoAd{
+    
+}
+
+- (void)rewardedVideoAdServerRewardDidSucceed:(BURewardedVideoAd *)rewardedVideoAd verify:(BOOL)verify {
+    
+}
+
+- (void)rewardedVideoAdCallback:(BURewardedVideoAd *)rewardedVideoAd withType:(BURewardedVideoAdType)rewardedVideoAdType{
+    
+}
+
+@end
+```
+
+#### BURewardedVideoAdDelegate Callback Instruction
+
 | BURewardedVideoAdDelegate Callback                         | Description                                                                                                                                   |
 |---------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | rewardedVideoAdDidLoad:                           | This method is called when video ad material loaded successfully.                                                                                                                                    |
@@ -108,44 +177,40 @@ self.rewardedVideoAd.delegate = self;
 
 
 
+### Display the Ad
 
-**Note:** To have a better user experience, we recommend to show RewardedVideo after `rewardedVideoAdVideoDidLoad` callback is triggered. It means the video has been downloaded successfully.
-
-### Display RewardedVideo
 Before displaying a rewarded ad to users, you must present the user with an explicit choice to view rewarded ad content in exchange for a reward. Rewarded ads must always be an opt-in experience.
 
-To show a rewarded ad, check the `rewardedVideoAdDidLoad` callback to verify that if the ad is returned. Then call `showAdFromRootViewController` to show a rewarded ad. The `rootViewController` is needed to pass for this method.
+To show a rewarded ad, check the `rewardedVideoAdDidLoad:` callback to verify that if the ad is returned. It is recommended to use the `rewardedVideoAdVideoDidLoad:` method to verify if it's finished loading and cached successfully. Then call `showAdFromRootViewController:` to show a rewarded ad. The `rootViewController` is needed to pass for this method.
 
 Instance:
 
 ```objective-c
 - (void)showRewardVideoAd {
-  if (self.rewardedVideoAd) {
-     [self.rewardedVideoAd showAdFromRootViewController:self];
-   }
+    if (self.rewardedVideoAd) {
+       [self.rewardedVideoAd showAdFromRootViewController:self];
+     }
  }
 ```
 
+**Note:** To have a better user experience, we recommend to show RewardedVideo after `rewardedVideoAdVideoDidLoad:` callback is triggered. It means the video has been downloaded successfully.
 
-#### Reward video ad showtime
-We recommend to check the rewardedVideoAdVideoDidLoad callback before showing a  rewarded ad to verify if the video is finished loading.
 
-```objective-c
-- (void)rewardedVideoAdVideoDidLoad:(BURewardedVideoAd *)rewardedVideoAd {
-   //After the callback method, the advertisement is displayed, which can ensure the smooth playing and display, and the user experience is better.
-}
-```
 
-### Reload reward video ad
-`BURewardedVideoAd` is a one-time-use object. This means that once a rewarded ad is shown, the object can't be used to load another ad. To request another rewarded ad, you'll need to create a new `BURewardedVideoAd` object.
+### Preload a Rewarded Ad
 
-A best practice is to load another rewarded ad in the `rewardedVideoAdDidClose` method on `BURewardedVideoAdDelegate` so that the next rewarded ad starts loading as soon as the previous one is dismissed:
+A best practice is to load another rewarded ad in the `rewardedVideoAdDidClose:` method on `BURewardedVideoAdDelegate` so that the next rewarded ad starts loading as soon as the previous one is dismissed:
 
 ```objective-c
 - (void)rewardedVideoAdDidClose:(BURewardedVideoAd *)rewardedVideoAd {
-//The original BURewardedVideoAd object can be set to nil in this callback
+    //The original BURewardedVideoAd object can be set to nil in this callback
+    //Start loading the next rewarded video ad here.
 }
 ```
+
+**Note:**  `BURewardedVideoAd` is a one-time-use object. This means that once a rewarded ad is shown, the object can't be used to load another ad. To request another new rewarded ad, you'll need to create a new `BURewardedVideoAd` object.
+
+
 
 ## Test with test ads
 
@@ -154,7 +219,8 @@ Now you have finished the integration. If you wanna test your apps, make sure yo
 Refer to the [How to add a test device?](https://www.pangleglobal.com/help/doc/5fba365f7b550100157bfc06) to add your device to the test devices on Pangle platform.
 
 
-## Server callback
+
+## Server-Side Reward Verification Callback
 
 **Note：**
 The Server-side verification is not necessary. Server-side verification acts as an additional layer of validation for rewarded ad views in your app. It’s performed in addition to the standard client-side callback. You can use server-side verification to validate each completed rewarded video ad view and ensure you're only rewarding users who have actually finished watching the video in your app.
@@ -214,8 +280,8 @@ Instance:
 }
 ```
 
-3. In order to ensure smooth playback and display, we recommend to check the `rewardedVideoAdVideoDidLoad` callback before showing the ad to verify if the video is finished loading.
-4. The extra should be the string serialized by JSON to ensure that it is not null.
+3. In order to ensure smooth playback and display, we recommend to check the `rewardedVideoAdVideoDidLoad:` callback before showing the ad to verify if the video is finished loading and cached successfully.
+4. The `extra` , a property of Object `BURewardedVideoModel`should be the string serialized by JSON to ensure that it is not null.
 5. The `isAdValid` method has been deprecated since V3.3.0.0. Please do not use this field to verify whether the reward video ad is valid.
 
 ## Resource
