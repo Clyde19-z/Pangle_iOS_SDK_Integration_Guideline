@@ -49,7 +49,7 @@ Loading a rewarded ad is accomplished using the `loadAdData` method on the `BURe
 
 #### Create the RewardedVideo Object
 
-Rewarded ads are requested and shown by `BURewardedVideoAd` object, which needed to be created before loading ads.  The `BURewardedVideoAd` object requires two parameters: a String 'slotID' which is your ad unit ID and a  `BURewardedVideoModel` object which is a user-related configuration containing the property like  `userId`, `rewardName`, and `rewardAmount`, etc. 
+Rewarded ad is requested and shown by `BURewardedVideoAd` object, which needed to be created before loading ads.  The `BURewardedVideoAd` object requires two parameters: a String 'slotID' which is your ad unit ID and a  `BURewardedVideoModel` object which is a user-related configuration containing the property like  `userId`, `rewardName`, and `rewardAmount`, etc. 
 
 Requied：
 
@@ -65,7 +65,7 @@ Optional：
 | extra            | Extra                  | NSString   | Expected json serialized string                                    |
 
 ```objective-c
-//It is required to generate a new BURewardedVideoAd object each time calling the loadAdData method to request the latest rewarded video ad. Please do not reuse the local cache rewarded video ad.
+// It is required to generate a new BURewardedVideoAd object each time calling the loadAdData method to request the latest rewarded video ad. Please do not reuse the local cache rewarded video ad.
 BURewardedVideoModel *model = [[BURewardedVideoModel alloc] init];
 model.userId = @"123";
 self.rewardedVideoAd = [[BURewardedVideoAd alloc] initWithSlotID:@"Your_Ad_Placement_Id" rewardedVideoModel:model];
@@ -81,7 +81,7 @@ Calling the `loadAdData` method on the `BURewardedVideoAd` object to load a rewa
 [self.rewardedVideoAd loadAdData];
 ```
 
-**Note:**  It is required to generate a new BURewardedVideoAd object each time calling the loadAdData method to request the latest rewarded video ad. Please do not reuse the local cache rewarded video ad.
+**Note:**  It is required to generate a new  `BURewardedVideoAd`  object each time calling the `loadAdData` method to request the latest rewarded video ad. Please do not reuse the local cache rewarded video ad.
 
 
 
@@ -183,6 +183,8 @@ In order to receive notifications for rewarded ad lifecycle and interactive even
 | rewardedVideoAdDidClickSkip:                      | This method is called when the user clicked the skip button.（needs to be applied separately, CPM has negative effect）                                                                              |
 | rewardedVideoAdCallback: withType:                | This method is used to get a type of rewarded video Ad.                                                                                                                                              |
 
+**Note：**It is recommended that distributing rewards to your users in the callback `rewardedVideoAdServerRewardDidSucceed: verify:` , according to the returned BOOL value of **verify** parameter when needed, no matter which reward verification way you choose, Server-Side or not.
+
 
 
 ### Display the Ad
@@ -191,17 +193,13 @@ Before displaying a rewarded ad to users, you must present the user with an expl
 
 To show a rewarded ad, check the `rewardedVideoAdDidLoad:` callback to verify that if the ad is returned. It is recommended to use the `rewardedVideoAdVideoDidLoad:` method to verify if it's finished loading and cached successfully. Then call `showAdFromRootViewController:` to show a rewarded ad. The `rootViewController` is needed to pass for this method.
 
-Instance:
-
 ```objective-c
-- (void)showRewardVideoAd {
-    if (self.rewardedVideoAd) {
-       [self.rewardedVideoAd showAdFromRootViewController:self];
-     }
- }
+if (self.rewardedVideoAd) {
+   [self.rewardedVideoAd showAdFromRootViewController:self];
+}
 ```
 
-**Note:** To have a better user experience, we recommend to show RewardedVideo after `rewardedVideoAdVideoDidLoad:` callback is triggered. It means the video has been downloaded successfully.
+**Note:** To have a better user experience, we recommend to show `rewardedVideoAd` after `rewardedVideoAdVideoDidLoad:` callback is triggered. It means the video has been downloaded successfully.
 
 
 
@@ -232,7 +230,6 @@ Refer to the [How to add a test device?](https://www.pangleglobal.com/help/doc/5
 
 **Note：**
 The Server-side verification is not necessary. Server-side verification acts as an additional layer of validation for rewarded ad views in your app. It’s performed in addition to the standard client-side callback. You can use server-side verification to validate each completed rewarded video ad view and ensure you're only rewarding users who have actually finished watching the video in your app.
-
 
 The server-side verification callback will append query parameters to your postback url describing the rewarded video interaction:
 `user_id=%s&trans_id=%s&reward_name=%s&reward_amount=%d&extra=%s&sign=%s`
@@ -280,7 +277,7 @@ Instance:
 
 
 ## Note
-1. All the rootViewController parameters in Ad APIs must be provided to process ad redirects. In the SDK, all redirects use the present method of UIViewController. Therefore, make sure that the passed rootViewController parameters are not null and do not have other present controllers. Otherwise the present will fail because presentedViewController already exists.
+1. All the rootViewController parameters in Ad APIs must be provided to process ad redirects. In the SDK, all redirects use the **present** method of UIViewController. Therefore, make sure that the passed rootViewController parameters are **not null** and **do not have other present controllers**. Otherwise the present will fail because presentedViewController already exists.
 2. Select the server callback, please ensure that the type of userid is NSString and not empty. The callback URL instance
 ```json
 {
