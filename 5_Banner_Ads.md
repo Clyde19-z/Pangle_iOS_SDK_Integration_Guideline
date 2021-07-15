@@ -19,12 +19,12 @@ Create an app and banner ad placement on Pangle platform
 The main steps to integrate banner ads are:
 
 - Load an banner ad.
-- Set ad delegate event callback.
+- Register ad event callbacks.
 - Display the ad.
 
 ### Load an banner ad
 
-Banner ads are requested by `loadAdData` method on the  `BUNativeExpressBannerView` object. The `BUNativeExpressBannerView` object requires three parameters: a String 'slotID' , a  Object 'rootViewController' and a CGSize 'adsize'.  The slotID is the unique identifier of banner ad and the rootViewController is a place where the banner is located. And the 'adsize' , which should be passed in 'point' for iOS , is the customized size that must be the same scale ratio as the pangle platform configuration of the banner view. 
+Banner ads are requested by `loadAdData` method on the  `BUNativeExpressBannerView` object. The `BUNativeExpressBannerView` object requires three parameters: a String 'slotID' , a  Object 'rootViewController' and a CGSize 'adsize' when instantiated and initialized. After that the property 'delegate' also need to be set to `BUNativeExpressBannerView` object before loading the ad. 
 
 
 
@@ -32,17 +32,7 @@ Once the loading succeeds, you need to display the banner ad by the `addSubview`
 
 #### Create the BUNativeExpressBannerView Object
 
-Create the **BUNativeExpressBannerView** Object by this method as below, if the banner placemet you created on Pangle platform can not refresh ads automatically itself. 
-
-```objective-c
-self.bannerView = [[BUNativeExpressBannerView alloc] initWithSlotID:slotID rootViewController:self adSize:CGSizeMake(screenWidth, bannerHeigh)];
-```
-
-And use this method with the parameter 'interval' if the banner can refresh ads every interval automatically itself.
-
-```objective-c
-self.bannerView = [[BUNativeExpressBannerView alloc]initWithSlotID:slotID rootViewController:self adSize:size interval:30];
-```
+Generally speaking，the `slotID` is your ad unit ID, the `rootViewController` is a place where the banner is located and the `adsize` , which should be passed in **point** for iOS , is the customized size that must be the same scale ratio as the pangle platform configuration of the banner view. 
 
 Requied：
 
@@ -57,21 +47,35 @@ Optional：
 | ---------------- | ----------------- | ---------- | ----------------------------------------- |
 | interval         | Rotation interval | NSInteger  | The interval of rotation was 30s to 120s. |
 
-#### load a banner ad
-
-Call `loadAdData` on `BUNativeExpressBannerView` to load a banner ad.
+You can create the **BUNativeExpressBannerView** Object by this method as below, if the banner placemet you created on Pangle platform without the function of refresh ads automatically itself. 
 
 ```objective-c
-self.bannerView.frame = CGRectMake(0, self.view.height-bannerHeigh, screenWidth, bannerHeigh);
+self.bannerView = [[BUNativeExpressBannerView alloc] initWithSlotID:slotID rootViewController:self adSize:CGSizeMake(screenWidth, bannerHeigh)];
+```
+
+Oppositely use this method with the parameter **interval**.
+
+```objective-c
+self.bannerView = [[BUNativeExpressBannerView alloc]initWithSlotID:slotID rootViewController:self adSize:size interval:30];
+```
+
+
+
+#### load a banner ad
+
+Call `loadAdData` on `BUNativeExpressBannerView` to load a banner ad. And make sure to have set the delegate property to be notified of events related to the native ad interactions.
+
+```objective-c
+self.bannerView.frame = CGRectMake(0, self.view.height - bannerHeigh, screenWidth, bannerHeigh);
 self.bannerView.delegate = self;
 [self.bannerView loadAdData];
 ```
 
 
 
-### Set ad delegate event callback
+### Register ad event callbacks
 
-Once the banner ad is loaded, these ad event callbacks, which be provided by the protocol **BUNativeExpressBannerViewDelegate** , will be invoked at the corresponding time for app to get notifications of banner ads.
+Once the banner ad is loaded, these ad event callbacks provided by the protocol **BUNativeExpressBannerViewDelegate** will be invoked at the corresponding time to notify its delegate.
 
 ```objective-c
 

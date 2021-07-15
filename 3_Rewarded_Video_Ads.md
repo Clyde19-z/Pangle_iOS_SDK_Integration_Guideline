@@ -43,13 +43,13 @@ The main steps to integrate rewarded video ads are:
 
 ### Load a Rewarded Ad
 
-Loading a rewarded ad is accomplished using the `loadAdData` method on the `BURewardedVideoAd` object. The loaded `BURewardedVideoAd` object is provided as a parameter in the `rewardedVideoAdDidLoad:`and `rewardedVideoAdVideoDidLoad:` callback.
+Loading a rewarded ad is accomplished using the `loadAdData` method on the `BURewardedVideoAd` object.  After that the property `delegate` also need to be set to `BURewardedVideoAd` object before loading the ad. The loaded `BURewardedVideoAd` object is provided as a parameter in the `rewardedVideoAdDidLoad:`and `rewardedVideoAdVideoDidLoad:` callback.
 
 
 
 #### Create the RewardedVideo Object
 
-Rewarded ad is requested and shown by `BURewardedVideoAd` object, which needed to be created before loading ads.  The `BURewardedVideoAd` object requires two parameters: a String 'slotID' which is your ad unit ID and a  `BURewardedVideoModel` object which is a user-related configuration containing the property like  `userId`, `rewardName`, and `rewardAmount`, etc. 
+Rewarded ad is requested and shown by `BURewardedVideoAd` object, which needed to be created before loading ads.  The `BURewardedVideoAd` object requires two parameters: a String `slotID` which is your ad unit ID and a  `BURewardedVideoModel` object which is a user-related configuration containing the property like  `userId`, `rewardName`, and `rewardAmount`, etc. 
 
 Requied：
 
@@ -75,9 +75,10 @@ self.rewardedVideoAd = [[BURewardedVideoAd alloc] initWithSlotID:@"Your_Ad_Place
 
 #### Load a Rewarded Video 
 
-Calling the `loadAdData` method on the `BURewardedVideoAd` object to load a rewarded ad.
+Calling the `loadAdData` method on the `BURewardedVideoAd` object to load a rewarded ad. And make sure to have set the delegate property to be notified of events related to the rewarded video ad interactions.
 
 ```objective-c
+self.rewardedVideoAd.delegate = self;
 [self.rewardedVideoAd loadAdData];
 ```
 
@@ -99,12 +100,6 @@ In order to receive notifications for rewarded ad lifecycle and interactive even
 @end
 
 @implementation BUDRewardedVideoAdViewController
-
-- (void)loadRewardVideoAdWithSlotID:(NSString *)slotID {
-		...
-    self.rewardedVideoAd.delegate = self;
-    [self.rewardedVideoAd loadAdData];
-}
 
 #pragma mark - BURewardedVideoAdDelegate
 - (void)rewardedVideoAdDidLoad:(BURewardedVideoAd *)rewardedVideoAd {

@@ -23,13 +23,13 @@ Native ads are ad assets that are presented to users via UI components. It can b
 
 Broadly speaking, there are three steps to successfully implement Native Ads:
 
-- Design your native ad layout
-- Load an ad 
-- Display the ad content in your app
+- Design your native ad layout.
+- Load an ad. 
+- Display the ad content in your app.
 
 ### Design your native ad layout
 
-Before loading a native ad, you should have finished the design of a native ad. You can do this in the Interface Builder as you would when creating any other xib file or manual layout via code.
+Before loading a native ad, you should have finished the design of a native ad. This can be done either with the Interface Builder or programmatically.
 
 Interface Builder Example as below:
 
@@ -51,7 +51,17 @@ Native ads are loaded via `BUNativeAd` object, which has the `loadAdData` method
 
 #### Configure the BUAdSlot
 
-Before you can load an ad, it is needed to initialize and configure the `BUAdSlot`. The following code demonstrates how to initialize a  `BUAdSlot`:
+Before you can load an ad, it is needed to initialize and configure the `BUAdSlot`. 
+
+Requied：
+
+| Field Definition | Field Name | Field Type | Remarks                                                      |
+| ---------------- | ---------- | ---------- | ------------------------------------------------------------ |
+| ID               | slot ID    | NSString   | ad placement ID                                              |
+| AdType           | ad type    | NS_ENUM    | ad type                                                      |
+| imgSize          | image size | BUSize     | image size, which is relevant to  NS_ENUM BUProposalSize, responsible for getting the view with the best results by using the predefined size in pixels. |
+
+The following code demonstrates how to initialize a `BUAdSlot`:
 
 ```objective-c
 BUAdSlot *adslot = [[BUAdSlot alloc] init];
@@ -73,7 +83,7 @@ _nativeAd.rootViewController = self;
 
 
 
-#### Set BUNativeAdDelegate
+#### Register BUNativeAdDelegate callbacks
 
 - To be notified of events related to the native ad interactions, set the delegate property of the native ad:
 

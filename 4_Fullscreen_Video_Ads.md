@@ -42,13 +42,13 @@ The main steps to integrate fullscreen video ads are:
 
 ### Load a Fullscreen Video Ad
 
-Loading a fullscreen ad is accomplished using the `loadAdData`  method on the  `BUFullscreenVideoAd` object. The loaded `BUFullscreenVideoAd` object is provided as a parameter in the `fullscreenVideoMaterialMetaAdDidLoad:`and `fullscreenVideoAdVideoDataDidLoad:` callback.
+Loading a fullscreen ad is accomplished using the `loadAdData`  method on the  `BUFullscreenVideoAd` object. After that the property `delegate` also need to be set to `BUFullscreenVideoAd` object before loading the ad. The loaded `BUFullscreenVideoAd` object is provided as a parameter in the `fullscreenVideoMaterialMetaAdDidLoad:`and `fullscreenVideoAdVideoDataDidLoad:` callback.
 
 
 
 #### Create the Fullscreen Video Object
 
-Fullscreen video ad is requested and shown by `BUFullscreenVideoAd` object, which needed to be created before loading ads.  The `BUFullscreenVideoAd` object requires one parameter: a String 'slotID' which is your ad unit ID when instantiated and initialized.
+Fullscreen video ad is requested and shown by `BUFullscreenVideoAd` object, which needed to be created before loading ads.  The `BUFullscreenVideoAd` object requires one parameter: a String `slotID` which is your ad unit ID when instantiated and initialized.
 
 Requied：
 
@@ -65,9 +65,10 @@ self.fullscreenVideoAd = [[BUFullscreenVideoAd alloc] initWithSlotID:@"Your_Ad_P
 
 #### Load a Fullscreen Video Ad 
 
-Calling the `loadAdData` method on the `BUFullscreenVideoAd` object to load a fullscreen video ad.
+Calling the `loadAdData` method on the `BUFullscreenVideoAd` object to load a fullscreen video ad. And make sure to have set the delegate property to be notified of events related to the fullscreen video ad interactions.
 
 ```objective-c
+self.fullscreenVideoAd.delegate = self;
 [self.fullscreenVideoAd loadAdData];
 ```
 
@@ -89,12 +90,6 @@ In order to receive notifications for fullscreen video ad lifecycle and interact
 @end
 
 @implementation BUDFullscreenViewController
-
-- (void)loadFullscreenVideoAdWithSlotID:(NSString *)slotID {
-		...
-    self.fullscreenVideoAd.delegate = self;
-    [self.fullscreenVideoAd loadAdData];
-}
 
 #pragma mark BURewardedVideoAdDelegate
 - (void)fullscreenVideoMaterialMetaAdDidLoad:(BUFullscreenVideoAd *)fullscreenVideoAd {
@@ -122,6 +117,7 @@ In order to receive notifications for fullscreen video ad lifecycle and interact
 }
 
 - (void)fullscreenVideoAdDidPlayFinish:(BUFullscreenVideoAd *)fullscreenVideoAd didFailWithError:(NSError *_Nullable)error{
+  
 }
 
 - (void)fullscreenVideoAdWillVisible:(BUFullscreenVideoAd *)fullscreenVideoAd{
@@ -181,7 +177,7 @@ if (self.fullscreenAd) {
 
 ### Preload a Fullscreen video Ad
 
-A best practice is to load another fullscreen video in the `fullscreenVideoAdDidClose` method on `BUFullscreenVideoAdDelegate` so that the next fullscreen video starts loading as soon as the previous one is dismissed:
+A best practice is to load another fullscreen video in the `fullscreenVideoAdDidClose` method on `BUFullscreenVideoAdDelegate` so that the next fullscreen video ad starts loading as soon as the previous one is dismissed:
 
 ```objective-c
 - (void)fullscreenVideoAdDidClose:(BUFullscreenVideoAd *)fullscreenVideoAd {
